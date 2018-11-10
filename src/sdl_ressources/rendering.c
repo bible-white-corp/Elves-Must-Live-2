@@ -220,7 +220,7 @@ static int get_lava_timer(struct game *game)
 {
     int res = game->timer_lava;
     game->timer_lava += 1;
-    if (!game->timer_lava < TIMER_MAX_LAVA)
+    if (!(game->timer_lava < TIMER_MAX_LAVA))
         game->timer_lava = 0;
     return res;
 }
@@ -229,9 +229,9 @@ static SDL_Texture *select_block_texture(struct game *game, enum block block)
 {
     if (block == LAVA1)
     {
-        if (get_lava_timer(game) < TIMER_MAX_LAVA)
+        if (get_lava_timer(game) < TIMER_MAX_LAVA3)
             return game->texture_lib[LAVA1];
-        else if (get_lava_timer(game) < TIMER_MAX_LAVA * 2)
+        else if (get_lava_timer(game) < TIMER_MAX_LAVA3 * 2)
             return game->texture_lib[LAVA2];
         return game->texture_lib[LAVA3];
     }

@@ -53,8 +53,8 @@
 #define TIMER_MAX_ATTACK 30
 #define TIMER_MAX_ATTACK2 15
 
-#define TIMER_MAX_LAVA 60
-#define TIMER_MAX_LAVA3 20
+#define TIMER_MAX_LAVA 360
+#define TIMER_MAX_LAVA3 120
 
 
 //load.c

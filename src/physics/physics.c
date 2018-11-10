@@ -227,14 +227,13 @@ int is_dead(struct map *map)
     {
         for (int j = 0; j < HEIGHT; j++)
         {
-            if (map->grid[j][i] == LAVA)
+            if (map->grid[j][i] == LAVA1)
             {
                 if (is_in_lava(player, i, j))
                     return 1;
             }
         }
     }
-    
     return 0;
 }
 
