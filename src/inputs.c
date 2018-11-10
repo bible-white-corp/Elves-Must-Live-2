@@ -22,6 +22,39 @@ struct inputs get_inputs(void)
     return in;
 }
 
+short check_block(struct character *pnj, int delta)
+{
+    int x = pnj->position.x / 1;
+    int y = pnj->position.y / 1;
+    if (pnj->map->grid[y][x + delta] == GRASS)
+        return 1;
+    if (pnj->map->grid[y + 1][x + delta] == GRASS)
+        return 1;
+    if (pnj->map->grid[y + 2][x + delta] != GRASS)
+        return 1;
+    return 0;
+}
+
+void best_ia(struct game *game)
+{
+    for (size_t i = 1; i < game->map->n_players; i++)
+    {
+        struct character *pnj = game->map->players[i];
+        if (pnj->orientation == 1 && check_block(pnj, 1))
+        {
+            pnj->orientation = -1;
+        }
+        if (pnj->orientation == -1 && check_block(pnj, -1))
+        {
+            pnj->orientation = 1;
+        }
+        if (pnj->orientation == 1)
+            move_left(pnj);
+        else
+            move_right(pnj);
+    }
+}
+
 int update(struct game *game, struct inputs in)
 {
     if (in.left)
@@ -30,6 +63,7 @@ int update(struct game *game, struct inputs in)
         move_right(game->map->players[0]);
     if (in.jump)
         move_jump(game->map->players[0]);
+    best_ia(game);
     if (in.quit)
     {
         printf("ABORT !!\n");

@@ -145,6 +145,7 @@ static SDL_Texture *select_player_sprite(struct game *game,
 static SDL_Texture *select_NPC_sprite(struct game *game,
         struct character *player)
 {
+    printf("HERE");
     int timer = get_timer(game);
     int index = timer / TIMER_MAX2;
     int dir = player->orientation;
@@ -153,7 +154,7 @@ static SDL_Texture *select_NPC_sprite(struct game *game,
         return game->texture_lib[EF];// a modif
     }
 
-    if (!is_ground)
+    if (!player->is_ground)
         return game->texture_lib[EFJ];
 
     if (dir == 1)

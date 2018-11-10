@@ -20,10 +20,10 @@
 #define PF_PATH "ressources/Player/front.png"
 #define PFJUMP_PATH "ressources/Player/frontjump.png"
 
-#define AR0_PATH "ressources/Player/attackingright0.png"
-#define AR1_PATH "ressources/Player/attackingright1.png"
-#define AL0_PATH "ressources/Player/attackingleft0.png"
-#define AL1_PATH "ressources/Player/attackingleft1.png"
+#define AR0_PATH "ressources/Player/attackright0.png"
+#define AR1_PATH "ressources/Player/attackright1.png"
+#define AL0_PATH "ressources/Player/attackleft0.png"
+#define AL1_PATH "ressources/Player/attackleft1.png"
 
 #define EL0_PATH "ressources/Ennemies/left0.png"
 #define EL1_PATH "ressources/Ennemies/left1.png"

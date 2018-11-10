@@ -43,7 +43,9 @@ static void add_player(int i, int j, struct map *map, short is_player)
     map->players[cur]->is_dead = 0;
     map->players[cur]->is_attacking = 0;
     if (is_player)
-        map->players[0]->is_player = 1;
+        map->players[cur]->is_player = 1;
+    else
+        map->players[cur]->is_player = 0;
 }
 
 void map_parse(char *path, struct map *map, short is_new)
@@ -75,7 +77,7 @@ void map_parse(char *path, struct map *map, short is_new)
                 break;
             switch (cur)
             {
-                case 'b':
+                case '.':
                     grid[j][i] = VOID;
                     break;
                 case 'w':
