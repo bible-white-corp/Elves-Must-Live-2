@@ -16,6 +16,7 @@ enum block
 {
     VOID = 0,
     GRASS = 1,
+    LAVA = 2,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
@@ -41,6 +42,10 @@ struct character
     short is_player; //further implementation will change this in enum
     struct map *map;
 
+    short is_ground;
+
+    short is_dead;
+
     struct vec2 size;
 
     struct vec2 position;
@@ -52,6 +57,8 @@ struct game
 {
     short is_playing;
     struct map *map;
+    int lvl;
+    int timer;
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture **texture_lib;

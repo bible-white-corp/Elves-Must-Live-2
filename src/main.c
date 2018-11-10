@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "eml2.h"
 #include "rendering.h"
@@ -6,14 +7,22 @@
 #include "inputs.h"
 #include "physics.h"
 
+void init_map(struct game *game, int lvl)
+{
+    char str[100] = { 0 };
+    sprintf(str, "maps/lvl%d.eml", lvl);
+    map_parse(str, game->map);
+    compute_delims(game->map);
+}
+
 void init_game(struct game *game)
 {
     game->is_playing = 1;
+    game->lvl = 0;
     game->map = malloc(sizeof(struct map));
-    map_parse("src/map.eml", game->map);
-    compute_delims(game->map);
+    init_map(game, game->lvl);
     game->texture_lib = calloc(20, sizeof(SDL_Texture*));
-
+    game->timer = 0;
     // Init SDL2 stuff
     init_sdl(game);
     load_textures(game);
@@ -40,7 +49,11 @@ int main(void)
         struct inputs in = get_inputs();
 
         // Call physics funcs
-        update(&game, in);
+        int res = update(&game, in);
+        if (res > 0)
+            init_map(&game, game.lvl);
+        if (res == -1)
+            break;
 
         // Render new frame
         render_frame(&game);

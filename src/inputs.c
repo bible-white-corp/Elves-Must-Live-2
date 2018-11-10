@@ -18,23 +18,28 @@ struct inputs get_inputs(void)
         in.jump = 1;
     if (state[SDL_SCANCODE_ESCAPE])
         in.quit = 1;
-    printf("%d %d %d %d\n", in.right, in.left, in.jump, in.quit);
+    printf("inputs : %d %d %d %d\n", in.right, in.left, in.jump, in.quit);
     return in;
 }
 
-void update(struct game *game, struct inputs in)
+int update(struct game *game, struct inputs in)
 {
     if (in.left)
-        move_left(game->map);
+        move_left(game->map->players[0]);
     if (in.right)
-        move_right(game->map);
+        move_right(game->map->players[0]);
     if (in.jump)
-        move_jump(game->map);
+        move_jump(game->map->players[0]);
     if (in.quit)
     {
         printf("ABORT !!\n");
         game->is_playing = 0;
     }
     apply_gravity(game->map);
-    move_all(game->map);
+    int res = move_all(game->map);
+    if (res == 1)
+        game->lvl--;
+    if (res == 2)
+        game->lvl++;
+    return res;
 }

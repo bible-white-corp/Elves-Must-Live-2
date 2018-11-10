@@ -12,4 +12,4 @@ struct inputs
 
 
 struct inputs get_inputs(void);
-void update(struct game *game, struct inputs in);
+int update(struct game *game, struct inputs in);
