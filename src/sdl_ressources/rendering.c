@@ -1,5 +1,3 @@
-#include <SDL.h>
-#include <SDL_image.h>
 #include <err.h>
 #include "rendering.h"
 
@@ -49,22 +47,22 @@ void load_textures(struct game *game)
 {
     SDL_Surface *grass_surface = IMG_Load(GRASS_PATH);
     if (!grass_surface)
-        errx("cannot load %s", GRASS_PATH);
+        warnx("cannot load %s", GRASS_PATH);
 
     SDL_Surface *void_surface = IMG_Load(VOID_PATH);
     if (!void_surface)
-        errx("cannot load %s", VOID_PATH);
+        warnx("cannot load %s", VOID_PATH);
 
     SDL_Texture *grass_text = SDL_CreateTextureFromSurface(game->renderer,
             grass_surface);
     if (!grass_text)
-        errx("cannot convert grass_surface to SDL_Texture");
+        warnx("cannot convert grass_surface to SDL_Texture");
     SDL_FreeSurface(grass_surface);
 
     SDL_Texture *void_text = SDL_CreateTextureFromSurface(game->renderer,
             void_surface);
     if (!grass_text)
-        errx("cannot convert void_surface to SDL_Texture");
+        warnx("cannot convert void_surface to SDL_Texture");
     SDL_FreeSurface(void_surface);
 
     game->texture_lib[VOID] = void_text;
@@ -81,8 +79,8 @@ void render_frame(struct game *game)
     {
         for (int i = 0; i < imax; i++)
         {
-            SDL_rect srcrect;
-            SDL_rect dstrect;
+            SDL_Rect srcrect;
+            SDL_Rect dstrect;
             srcrect.x = 0;
             srcrect.y = 0;
             srcrect.w = BLOCK_SIZE;

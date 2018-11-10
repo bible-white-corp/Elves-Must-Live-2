@@ -1,15 +1,13 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -pedantic -std=c99 -Isrc/include
-
-VPATH=src
+CFLAGS=-Wall -Wextra -pedantic -std=c99 -lSDL2 -Isrc/include -g
 
 # relative to src/
-OBJS=main.o
-BIN=EML2
+OBJS=src/main.o src/sdl_ressources/rendering.o src/parser.o
+BIN=main
 
 all: $(BIN)
 
 $(BIN): $(OBJS)
 
-clear:
+clean:
 	$(RM) $(OBJS) $(BIN)

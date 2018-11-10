@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <SDL2/SDL.h>
 
 #include "eml2.h"
 #include "rendering.h"
