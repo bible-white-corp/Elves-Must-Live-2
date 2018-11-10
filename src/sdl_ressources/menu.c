@@ -3,10 +3,10 @@
 static void render_EML(struct game *game)
 {
     SDL_Rect dstrect;
-    dstrect.x = 240;
+    dstrect.x = 100;
     dstrect.y = 100;
-    dstrect.w = 320;
-    dstrect.h = 76;
+    dstrect.w = 640;
+    dstrect.h = 152;
 
     SDL_RenderCopy(game->renderer, game->texture_lib[EML], NULL, &dstrect);
 }

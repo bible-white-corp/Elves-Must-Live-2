@@ -4,16 +4,27 @@ Display
 [V] Init
 [V] Destroy
 [V] Rendering
-[-] Render players
-[-] Use rpev orientation
-[-] Render attacks
-[-] Render Ennemies
+[V] Render players
+[V] Use rpev orientation
+[V] Render attacks
+[V] Render Ennemies
+[V] Animate Lava
+[V] Main menu
 
 Physics
 [V] Basic functions
 [V] Collision
-[-] Bounds
-[-] Iter gravity
+[V] Bounds
+[V] Iter gravity
+[V] jump
+[V] wall jump
+[V] death
+[V] victory
+[V] multi entities
+[V] ergonomie des collisions
+[-] gerer isground
+[-] 
+
 
 Gameplay
 [V] Parser
