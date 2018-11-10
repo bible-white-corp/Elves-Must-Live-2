@@ -141,20 +141,27 @@ static void move_bounce(struct character *player, struct line l)
         player->velocity.x *= -BOUNCE;
     }
     else
-        player->velocity.y *= -(BOUNCE / 10);
+        player->velocity.y *= -(BOUNCE / 15);
     player->velocity = v_scale(player->velocity, BOUNCE);
     move(player);
+    player->has_jumped = 0;
 }
 
 
 void move_left(struct character *player)
 {
+    if (player->went_left && player->is_player)
+        return;
     player->velocity.x = -MOVE_SPEED;
+    player->went_left = TIMEOUT;
 }
 
 void move_right(struct character *player)
 {
+    if (player->went_right && player->is_player)
+        return;
     player->velocity.x = MOVE_SPEED;
+    player->went_right = TIMEOUT;
 }
 
 void move_jump(struct character *player)
@@ -165,6 +172,10 @@ void move_jump(struct character *player)
     player->has_jumped = 1;
 }
 
+void move_attack(struct character *player)
+{
+    
+}
 
 int p_is_in(struct vec2 point, struct vec2 origin, struct vec2 size)
 {
@@ -245,8 +256,9 @@ int ground_under(struct map *map, struct vec2 point)
 {
     int x = point.x;
     int y = point.y - 0.1f;
-
-    return map->grid[y][x] != VOID;
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+        return map->grid[y][x] != VOID;
+    return 0;
 }
 
 int on_ground(struct map *map)
@@ -301,7 +313,18 @@ int move_all(struct map *map)
     }
 
     players[0]->is_ground = on_ground(map);
-    printf("on ground?: %d\n", players[0]->is_ground);
+    if (players[0]->went_left)
+        players[0]->went_left--;
+
+    if (players[0]->went_right)
+        players[0]->went_right--;
+
+    if (players[0]->is_ground)
+        players[0]->has_jumped = 0 ;
+
+    if (players[0]->is_attacking)
+        players[0]->is_attacking--;
+
     if (is_dead(map))
         return -1;
     if (won(map))
@@ -311,6 +334,10 @@ int move_all(struct map *map)
     }
     return 0;
 }
+
+
+
+
 
 
 

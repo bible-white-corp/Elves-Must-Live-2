@@ -65,21 +65,21 @@ struct map
 
 struct character
 {
-    short is_player; //further implementation will change this in enum
+    short is_player;
     struct map *map;
+
+    int went_left;
+    int went_right;
 
     short is_ground;
     short orientation;
     short is_attacking;
     short has_jumped;
 
-    short is_dead; //inutile
-
     struct vec2 size;
 
     struct vec2 position;
     struct vec2 velocity;
-    struct vec2 acceleration;
 };
 
 struct game

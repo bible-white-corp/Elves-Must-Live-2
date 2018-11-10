@@ -20,7 +20,6 @@ struct inputs get_inputs(void)
         in.quit = 1;
     if (state[SDL_SCANCODE_RCTRL])
         in.attack = 1;
-    printf("inputs : %d %d %d %d %d\n", in.right, in.left, in.jump, in.quit, in.attack);
     return in;
 }
 
@@ -92,7 +91,6 @@ int update(struct game *game, struct inputs in)
             player->orientation = -1;
         if (dir == 1)
             player->orientation = 1;
-        printf("x %f\ny %f\n%d\n\n", player->velocity.x, player->velocity.y, player->orientation);
     }
     if (game->map->players[0]->position.x < 0)
     {

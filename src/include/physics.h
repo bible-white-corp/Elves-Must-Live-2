@@ -4,12 +4,13 @@
 #include <math.h>
 
 #define ACCELERATION 0.02f
-#define BOUNCE 0.2f
+#define BOUNCE 0.9f
 #define EPSILON 0.000001f
 #define MOVE_SPEED 0.2f
 #define JUMP 0.4f
 #define DRAG 0.97f
 #define MAX_SPEED 5
+#define TIMEOUT 5
 
 int apply_gravity(struct map *map);
 int move_all(struct map *map);
