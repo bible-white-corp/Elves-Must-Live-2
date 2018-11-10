@@ -7,6 +7,7 @@
 #include "parser.h"
 #include "inputs.h"
 #include "physics.h"
+#include "menu.h"
 
 void init_map(struct game *game, int lvl)
 {
@@ -68,7 +69,8 @@ int main(void)
             break;
 
         // Render new frame
-        render_frame(&game);
+        //render_frame(&game);
+        main_menu(&game);
     }
     destroy_game(&game);
 }

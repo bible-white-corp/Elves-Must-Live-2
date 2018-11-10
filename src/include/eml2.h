@@ -17,7 +17,8 @@ enum block
     VOID = 0,
     GRASS = 1,
     LAVA = 2,
-    PRINCESS = 3,
+    LAVA2 = 3,
+    PRINCESS = 4,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
@@ -37,7 +38,17 @@ enum block
     EL0 = 26,
     EL1 = 27,
     EF = 28,
-    EFJ = 29
+    EFJ = 29,
+    BG = 30,
+    CREDITS = 31,
+    CREDITSS = 32,
+    EML = 33,
+    HISTORY = 34,
+    HISTORYS = 35,
+    QUICKGAME = 36,
+    QUICKGAMES = 37,
+    DOOR = 38,
+    DOORS = 39
 };
 
 struct map

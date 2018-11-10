@@ -4,8 +4,11 @@
 
 #define GAME_NAME "Elves Must Live 2"
 #define LAVA_PATH "ressources/blocks/lava.png"
+#define LAVA2_PATH "ressources/blocks/lava2.png"
 #define GRASS_PATH "ressources/blocks/grass.png"
 #define VOID_PATH "ressources/blocks/void.png"
+#define PRINCESS_PATH "ressources/blocks/princess.png"
+
 
 #define PL0_PATH "ressources/Player/left0.png"
 #define PL1_PATH "ressources/Player/left1.png"
@@ -30,8 +33,18 @@
 #define ER0_PATH "ressources/Ennemies/right0.png"
 #define ER1_PATH "ressources/Ennemies/right1.png"
 #define EF_PATH "ressources/Ennemies/front.png"
-#define EFJ_PATH "ressources/Ennemies/frontjump.png"
+#define EFJ_PATH "ressources/Ennemies/frontJ.png"
 
+#define DOOR_PATH "ressources/Menus/quit.png"
+#define DOORS_PATH "ressources/Menus/quitS.png"
+#define BG_PATH "ressources/Menus/background.png"
+#define CREDITS_PATH "ressources/Menus/credits.png"
+#define CREDITSS_PATH "ressources/Menus/creditsS.png"
+#define EML_PATH "ressources/Menus/eml.png"
+#define HISTORY_PATH "ressources/Menus/history.png"
+#define HISTORYS_PATH "ressources/Menus/historyS.png"
+#define QUICKGAME_PATH "ressources/Menus/quickgame.png"
+#define QUICKGAMES_PATH "ressources/Menus/quickgameS.png"
 
 #define TIMER_MAX 20
 #define TIMER_MAX2 10

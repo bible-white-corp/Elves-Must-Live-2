@@ -1,6 +1,70 @@
 #include <err.h>
 #include "rendering.h"
 
+static void load_menus(struct game *game)
+{
+    SDL_Texture *bg_text = IMG_LoadTexture(game->renderer,
+            BG_PATH);
+    if (!bg_text)
+        warnx("cannot convert background to SDL_Texture");
+
+    SDL_Texture *door_text = IMG_LoadTexture(game->renderer,
+            DOOR_PATH);
+    if (!door_text)
+        warnx("cannot convert door to SDL_Texture");
+
+    SDL_Texture *doorS_text = IMG_LoadTexture(game->renderer,
+            DOORS_PATH);
+    if (!doorS_text)
+        warnx("cannot convert doorS to SDL_Texture");
+
+    SDL_Texture *credits_text = IMG_LoadTexture(game->renderer,
+            CREDITS_PATH);
+    if (!credits_text)
+        warnx("cannot convert credits to SDL_Texture");
+
+    SDL_Texture *creditsS_text = IMG_LoadTexture(game->renderer,
+            CREDITSS_PATH);
+    if (!creditsS_text)
+        warnx("cannot convert creditsS to SDL_Texture");
+
+    SDL_Texture *eml_text = IMG_LoadTexture(game->renderer,
+            EML_PATH);
+    if (!eml_text)
+        warnx("cannot convert eml to SDL_Texture");
+
+    SDL_Texture *history_text = IMG_LoadTexture(game->renderer,
+            HISTORY_PATH);
+    if (!history_text)
+        warnx("cannot convert history to SDL_Texture");
+
+    SDL_Texture *historyS_text = IMG_LoadTexture(game->renderer,
+            HISTORYS_PATH);
+    if (!historyS_text)
+        warnx("cannot convert historyS to SDL_Texture");
+
+    SDL_Texture *quickgame_text = IMG_LoadTexture(game->renderer,
+            QUICKGAME_PATH);
+    if (!quickgame_text)
+        warnx("cannot convert quickgame to SDL_Texture");
+
+    SDL_Texture *quickgameS_text = IMG_LoadTexture(game->renderer,
+            QUICKGAMES_PATH);
+    if (!quickgameS_text)
+        warnx("cannot convert quickgameS to SDL_Texture");
+
+    game->texture_lib[DOOR] = door_text;
+    game->texture_lib[DOORS] = doorS_text;
+    game->texture_lib[BG] = bg_text;
+    game->texture_lib[CREDITS] = credits_text;
+    game->texture_lib[CREDITSS] = creditsS_text;
+    game->texture_lib[EML] = eml_text;
+    game->texture_lib[HISTORY] = history_text;
+    game->texture_lib[HISTORYS] = historyS_text;
+    game->texture_lib[QUICKGAME] = quickgame_text;
+    game->texture_lib[QUICKGAMES] = quickgameS_text;
+
+}
 
 void load_blocks(struct game *game)
 {
@@ -17,12 +81,23 @@ void load_blocks(struct game *game)
     SDL_Texture *lava_text = IMG_LoadTexture(game->renderer,
             LAVA_PATH);
     if (!lava_text)
-        warnx("cannot convert lava_surface to SDL_Texture");
+        warnx("cannot convert lava to SDL_Texture");
 
+    SDL_Texture *lava2_text = IMG_LoadTexture(game->renderer,
+            LAVA2_PATH);
+    if (!lava2_text)
+        warnx("cannot convert lava2 to SDL_Texture");
+
+    SDL_Texture *princess_text = IMG_LoadTexture(game->renderer,
+            PRINCESS_PATH);
+    if (!princess_text)
+        warnx("cannot convert Princess Shepard to SDL_Texture");
 
     game->texture_lib[VOID] = void_text;
     game->texture_lib[GRASS] = grass_text;
     game->texture_lib[LAVA] = lava_text;
+    game->texture_lib[LAVA2] = lava2_text;
+    game->texture_lib[PRINCESS] = princess_text;
 
 }
 
@@ -166,5 +241,6 @@ void load_players(struct game *game)
     game->texture_lib[PF] = pf_text;
     load_players_jump(game);
     load_players_attacks(game);
+    load_menus(game);
     load_ennemies(game);
 }
