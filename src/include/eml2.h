@@ -17,6 +17,8 @@ enum block
     VOID = 0,
     GRASS = 1,
     LAVA = 2,
+    LAVA2 = 3,
+    PRINCESS = 4,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
