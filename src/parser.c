@@ -21,6 +21,10 @@ static void add_player(int i, int j, struct map *map, short is_player)
     {
         i, j
     };
+    struct vec2 velo =
+    {
+        0, 0
+    };
     struct vec2 size =
     {
         1, 2
@@ -38,6 +42,7 @@ static void add_player(int i, int j, struct map *map, short is_player)
     map->players[cur]->position = pos;
     map->players[cur]->size = size;
     map->players[cur]->map = map;
+    map->players[cur]->velocity = velo;
     map->players[cur]->is_ground = 1;
     map->players[cur]->orientation = 1;
     map->players[cur]->is_dead = 0;
@@ -85,6 +90,9 @@ void map_parse(char *path, struct map *map, short is_new)
                     break;
                 case 'l':
                     grid[j][i] = LAVA;
+                    break;
+                case 'f':
+                    grid[j][i] = PRINCESS;
                     break;
                 case 'p':
                     grid[j][i] = VOID;
