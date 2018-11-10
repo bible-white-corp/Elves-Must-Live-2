@@ -154,6 +154,7 @@ static SDL_Texture *select_player_sprite(struct game *game,
 static SDL_Texture *select_NPC_sprite(struct game *game,
         struct character *player)
 {
+    printf("HERE");
     int timer = get_timer(game);
     int index = timer / TIMER_MAX2;
     int dir = player->orientation;
@@ -165,7 +166,7 @@ static SDL_Texture *select_NPC_sprite(struct game *game,
     if (!player->is_ground)
         return game->texture_lib[EFJ];
 
-    if (dir == 1)
+    if (dir == -1)
     {
 
         if ((player->velocity.x > -0.05 && player->velocity.x < 0.05)
@@ -202,6 +203,10 @@ void render_players(struct game *game)
         //attacking left
         if (player->is_attacking && player->orientation == -1)
             dstrect.x -= BLOCK_SIZE;
+        if (player->is_attacking)
+        {
+            dstrect.w *= 2;
+        }
 
         SDL_RenderCopy(game->renderer, text, NULL, &dstrect);
     }

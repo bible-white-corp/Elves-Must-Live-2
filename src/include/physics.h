@@ -4,10 +4,10 @@
 #include <math.h>
 
 #define ACCELERATION 0.02f
-#define BOUNCE 0.5f
+#define BOUNCE 0.2f
 #define EPSILON 0.000001f
-#define MOVE_SPEED 0.1f
-#define JUMP 0.7f
+#define MOVE_SPEED 0.2f
+#define JUMP 0.4f
 #define DRAG 0.97f
 int apply_gravity(struct map *map);
 int move_all(struct map *map);
@@ -18,3 +18,4 @@ void compute_delims(struct map *map);
 void move_left(struct character *player);
 void move_right(struct character *player);
 void move_jump(struct character *player);
+

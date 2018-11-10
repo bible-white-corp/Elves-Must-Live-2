@@ -95,10 +95,10 @@ void load_ennemies(struct game *game)
     if (!er1_text)
         warnx("cannot convert ennemy right 1 to SDL_Texture");
 
-    SDL_Texture *el1_text = IMG_LoadTexture(game->renderer,
-            EL1_PATH);
-    if (!el1_text)
-        warnx("cannot convert ennemy left 1 to SDL_Texture");
+    SDL_Texture *el0_text = IMG_LoadTexture(game->renderer,
+            EL0_PATH);
+    if (!el0_text)
+        warnx("cannot convert ennemy left 0 to SDL_Texture");
 
     SDL_Texture *el1_text = IMG_LoadTexture(game->renderer,
             EL1_PATH);
@@ -111,7 +111,7 @@ void load_ennemies(struct game *game)
         warnx("cannot convert ennemy front to SDL_Texture");
 
     SDL_Texture *efj_text = IMG_LoadTexture(game->renderer,
-            ELJ_PATH);
+            EFJ_PATH);
     if (!efj_text)
         warnx("cannot convert ennemy front jump to SDL_Texture");
 
@@ -173,6 +173,7 @@ void load_players_attacks(struct game *game)
     game->texture_lib[AR1] = ar1_text;
     game->texture_lib[AL0] = al0_text;
     game->texture_lib[AL1] = al1_text;
+
 }
 
 void load_players(struct game *game)
@@ -223,4 +224,5 @@ void load_players(struct game *game)
     load_players_jump(game);
     load_players_attacks(game);
     load_menus(game);
+    load_ennemies(game);
 }

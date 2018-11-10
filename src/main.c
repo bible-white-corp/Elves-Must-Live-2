@@ -3,6 +3,7 @@
 
 #include "eml2.h"
 #include "rendering.h"
+#include "vector.h"
 #include "parser.h"
 #include "inputs.h"
 #include "physics.h"
@@ -12,7 +13,10 @@ void init_map(struct game *game, int lvl)
 {
     char str[100] = { 0 };
     sprintf(str, "maps/lvl%d.eml", lvl);
-    map_parse(str, game->map);
+    if (lvl == 0)
+        map_parse(str, game->map, 1);
+    else
+        map_parse(str, game->map, 0);
     compute_delims(game->map);
 }
 
@@ -52,7 +56,15 @@ int main(void)
         // Call physics funcs
         int res = update(&game, in);
         if (res > 0)
+        {
+            float save_y = game.map->players[0]->position.y;
             init_map(&game, game.lvl);
+            game.map->players[0]->position.y = save_y;
+            if (res == 1)
+                game.map->players[0]->position.x = 49;
+            if (res == 2)
+                game.map->players[0]->position.x = 1;
+        }
         if (res == -1)
             break;
 
