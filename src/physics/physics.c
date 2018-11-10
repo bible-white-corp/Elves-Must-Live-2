@@ -15,6 +15,25 @@ static float min(float a, float b)
     return b;
 }
 
+
+
+int apply_gravity(struct map *map)
+{
+    struct character **players = map->players;
+    size_t n = map->n_players;
+    struct vec2 gravity =
+    {
+        0, ACCELERATION
+    };
+
+    for (size_t i = 0; i < n; i++)
+        players[i]->velocity = v_sum(players[i]->velocity, gravity);
+
+    return 0;
+}
+
+
+
 //opti: l'écrire en une ligne
 static int on_line(struct line l1, struct vec2 p)
 {
@@ -39,6 +58,7 @@ static int is_equal(float a, float b)
     return a - EPSILON < b && a + EPSILON > b;
 }
 
+
 int is_intersect(struct line l1, struct line l2)
 {
     int dir1 = dir_points(l1.p1, l1.p2, l2.p1);
@@ -56,20 +76,6 @@ int is_intersect(struct line l1, struct line l2)
 }
 
 
-int apply_gravity(struct map *map)
-{
-    struct character **players = map->players;
-    size_t n = map->n_players;
-    struct vec2 gravity =
-    {
-        0, ACCELERATION
-    };
-
-    for (size_t i = 0; i < n; i++) //gravity
-        players[i]->velocity = v_sum(players[i]->velocity, gravity);
-
-    return 0;
-}
 
 static int check_col(struct character *player, struct line line)
 {
@@ -86,8 +92,15 @@ static int check_col(struct character *player, struct line line)
     return is_intersect(dPlayer, line);
 }
 
+
 static struct vec2 find_intersection(struct character *player, struct line l)
 {
+    struct vec2 hitPlayer = player->position;
+    if (player->velocity.x > 0)
+        hitPlayer.x += player->size.x;
+    if (player->velocity.y > 0)
+        hitPlayer.y += player->size.y;
+
     struct vec2 res =
     {
         0, 0
@@ -95,7 +108,7 @@ static struct vec2 find_intersection(struct character *player, struct line l)
 
     struct line dPlayer =
     {
-        player->position, v_sum(player->position, player->velocity)
+        hitPlayer, v_sum(hitPlayer, player->velocity)
     };
     if (l.p1.x == l.p2.x) //vertical
     {
@@ -120,8 +133,14 @@ static void move(struct character *player)
 static void move_bounce(struct character *player, struct line l)
 {
     struct vec2 inter = find_intersection(player, l);
+/*
+    if (player->velocity.x > 0)
+        inter.x -= player->size.x;
+    if (player->velocity.y > 0)
+        inter.y -= player->size.y;
 
     player->position = inter;
+*/
     if (l.p1.x == l.p2.x) //collide avec un truc vertical
         player->velocity.x *= (-1);
     else
@@ -131,19 +150,19 @@ static void move_bounce(struct character *player, struct line l)
 }
 
 
-void move_left(struct map *map)
+void move_left(struct character *player)
 {
-    map->players[0]->velocity.x = -MOVE_SPEED;
+    player->velocity.x = -MOVE_SPEED;
 }
 
-void move_right(struct map *map)
+void move_right(struct character *player)
 {
-    map->players[0]->velocity.x = MOVE_SPEED;
+    player->velocity.x = MOVE_SPEED;
 }
 
-void move_jump(struct map *map)
+void move_jump(struct character *player)
 {
-    map->players[0]->velocity.y = -JUMP;
+    player->velocity.y = -JUMP;
 }
 
 int move_all(struct map *map)
@@ -167,7 +186,9 @@ int move_all(struct map *map)
         if (!collided)
             move(players[i]);
     }
-
+    //return -1 s'il est mort
+    //return 1 si gauche
+    //return 2 si droite
     return 0;
 }
 
