@@ -9,6 +9,11 @@ struct vec2
     float y;
 };
 
+struct line
+{
+    struct vec2 p1;
+    struct vec2 p2;
+};
 
 struct vec2 v_sum(struct vec2 a, struct vec2 b);
 struct vec2 v_sub(struct vec2 a, struct vec2 b);
