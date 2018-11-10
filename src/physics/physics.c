@@ -162,9 +162,35 @@ void move_jump(struct character *player)
     player->velocity.y = -JUMP;
 }
 
-int is_dead(struct character *player)
+
+int p_is_in(struct vec2 point, struct character *p)
 {
-    player = player;
+    return is_between(point.x, p->position.x, p->position.x + p->size.x)
+        && is_between(point.y, p->position.y, p->position.y + p->size.y);
+}
+
+int is_in(struct character *player, struct character *ennemy)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        struct vec2 border =
+        {
+            player->position.x + player->size.x * (i / 2),
+            player->position.y + player->size.y * (i % 2)
+        };
+        if (p_is_in(border, ennemy))
+            return 1;
+    }
+    return 0;
+}
+
+int is_dead(struct map *map)
+{
+    for (size_t i = 1; i < map->n_players; i++)
+    {
+        if (is_in(map->players[0], map->players[i]))
+            return 1;
+    }
     return 0;
 }
 
@@ -189,7 +215,7 @@ int move_all(struct map *map)
         if (!collided)
             move(players[i]);
     }
-    if (is_dead(map->players[0]))
+    if (is_dead(map))
         return -1;
     return 0;
 }
@@ -268,3 +294,4 @@ void compute_delims(struct map *map)
     map->n_delims = nblocks;
     remove_redundancies(map);
 }
+
