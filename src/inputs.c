@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "inputs.h"
+#include "physics.h"
 
 struct inputs get_inputs(void)
 {
@@ -23,17 +24,17 @@ struct inputs get_inputs(void)
 
 void update(struct game *game, struct inputs in)
 {
-    /*if (in.left)
+    if (in.left)
         move_left(game->map);
     if (in.right)
         move_right(game->map);
     if (in.jump)
-        move_jump(game->map);*/
+        move_jump(game->map);
     if (in.quit)
     {
         printf("ABORT !!\n");
         game->is_playing = 0;
     }
-    /*apply_gravity(game->map);
-    move_all(game->map);*/
+    apply_gravity(game->map);
+    move_all(game->map);
 }

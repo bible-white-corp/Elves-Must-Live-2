@@ -30,8 +30,8 @@ struct map
     struct character **players;
     size_t n_players;
 
-    struct vec2 *delims;
-    size_t n_delims_duos; //n * 2 delims presents
+    struct line *delims;
+    size_t n_delims;
 
     enum block **grid; //grid[height][width] merci Louis
 };

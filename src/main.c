@@ -4,13 +4,14 @@
 #include "rendering.h"
 #include "parser.h"
 #include "inputs.h"
+#include "physics.h"
 
 void init_game(struct game *game)
 {
     game->is_playing = 1;
     game->map = malloc(sizeof(struct map));
     map_parse("src/map.eml", game->map);
-    //compute_delims(game->map);
+    compute_delims(game->map);
     game->texture_lib = calloc(20, sizeof(SDL_Texture*));
 
     // Init SDL2 stuff

@@ -84,7 +84,6 @@ static int check_col(struct character *player, struct line line)
             newpos, v_sum(newpos, player->velocity)
         };
     return is_intersect(dPlayer, line);
-    
 }
 
 static struct vec2 find_intersection(struct character *player, struct line l)
@@ -114,6 +113,7 @@ static struct vec2 find_intersection(struct character *player, struct line l)
 static void move(struct character *player)
 {
     player->position = v_sum(player->position, player->velocity);
+    player->velocity.x *= DRAG;
 }
 
 
@@ -153,10 +153,10 @@ int move_all(struct map *map)
     for (size_t i = 0; i < n; i++)
     {
         short collided = 0;
-        size_t ndel = players[0]->map->n_delims;
+        size_t ndel = map->n_delims;
         for (size_t j = 0; j < ndel; j++)
         {
-            struct line delim = players[0]->map->delims[j];
+            struct line delim = map->delims[j];
             if (check_col(players[i], delim))
             {
                 move_bounce(players[i], delim);
@@ -176,11 +176,11 @@ struct line l_create(float a, float b, float c, float d)
 {
     struct vec2 v1 =
     {
-        a, b
+        b, a
     };
     struct vec2 v2 =
     {
-        c, d
+        d, c
     };
 
     struct line res =
@@ -195,7 +195,7 @@ void compute_delims(struct map *map)
     size_t nblocks = 0;
     for (int i = 0; i < HEIGHT; i++)
     {
-        for (int j = 0; i < WIDTH; j++)
+        for (int j = 0; j < WIDTH; j++)
         {
             if (map->grid[i][j] == GRASS)
             {
