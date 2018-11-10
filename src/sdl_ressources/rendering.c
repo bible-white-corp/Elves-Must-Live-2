@@ -37,6 +37,19 @@ void destroy_sdl(struct game *game)
 {
     SDL_DestroyTexture(game->texture_lib[VOID]);
     SDL_DestroyTexture(game->texture_lib[GRASS]);
+    SDL_DestroyTexture(game->texture_lib[LAVA]);
+
+    SDL_DestroyTexture(game->texture_lib[PR0]);
+    SDL_DestroyTexture(game->texture_lib[PR1]);
+    SDL_DestroyTexture(game->texture_lib[PR2]);
+    SDL_DestroyTexture(game->texture_lib[PL0]);
+    SDL_DestroyTexture(game->texture_lib[PL1]);
+    SDL_DestroyTexture(game->texture_lib[PL2]);
+    SDL_DestroyTexture(game->texture_lib[PF]);
+    SDL_DestroyTexture(game->texture_lib[PFJ]);
+    SDL_DestroyTexture(game->texture_lib[PRJ]);
+    SDL_DestroyTexture(game->texture_lib[PLJ]);
+
 
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
@@ -49,6 +62,46 @@ void load_textures(struct game *game)
     load_players(game);
 }
 
+static int get_timer(struct game *game)
+{
+    int res = game->timer;
+    game->timer += 1;
+    if (game->timer > TIMER_MAX)
+        game->timer = 0;
+    return res;
+}
+
+static SDL_Texture *select_player_sprite(struct game *game,
+        struct character *player)
+{
+    int timer = get_timer(game);
+    int index = timer / 45;
+    int dir = player->velocity.x > 0 ? -1 : player->velocity.x == 0 ? 0 : 1;
+    if (dir == 0)
+    {
+        if (player->velocity.y < 0.1 ||player->velocity.y > -0.1 )
+            return game->texture_lib[PF];
+        return game->texture_lib[PFJ];
+    }
+    if (dir == 1)
+    {
+        if (player->velocity.y >= 0.1 ||player->velocity.y <= -0.1)
+            return game->texture_lib[PLJ];
+        if (index == 0)
+            return game->texture_lib[PL0];
+        /*else if (index == 1)
+            return game->texture_lib[PL1];*/
+        return game->texture_lib[PL2];
+    }
+    if (player->velocity.y >= 0.1 ||player->velocity.y <= -0.1)
+            return game->texture_lib[PRJ];
+        if (index == 0)
+            return game->texture_lib[PR0];
+        /*else if (index == 1)
+            return game->texture_lib[PR1];*/
+        return game->texture_lib[PR2];
+
+}
 void render_players(struct game *game)
 {
     for (size_t i = 0; i < game->map->n_players; i++)
@@ -59,16 +112,19 @@ void render_players(struct game *game)
             dstrect.w = BLOCK_SIZE;
             dstrect.h = 2 * BLOCK_SIZE;
 
-            SDL_RenderCopy(game->renderer,
-                    game->texture_lib[PL0],
-                    NULL,
-                    &dstrect);
+            struct character *player = game->map->players[i];
+            SDL_Texture *text;
+            if (!player->is_player)
+                text = select_player_sprite(game, player);
+            else
+                text= NULL;
+
+            SDL_RenderCopy(game->renderer, text, NULL, &dstrect);
     }
 }
 
-void render_frame(struct game *game)
+static void render_map(struct game *game)
 {
-
     int imax = WIN_WIDTH / BLOCK_SIZE;
     int jmax = WIN_HEIGHT / BLOCK_SIZE;
 
@@ -89,6 +145,11 @@ void render_frame(struct game *game)
                     &dstrect);
         }
     }
+
+}
+void render_frame(struct game *game)
+{
+    render_map(game);
     render_players(game);
     SDL_RenderPresent(game->renderer);
 }

@@ -23,7 +23,10 @@ enum block
     PR0 = 13,
     PR1 = 14,
     PR2 = 15,
-    PF = 16
+    PF = 16,
+    PLJ = 17,
+    PRJ = 18,
+    PFJ = 19
 };
 
 struct map

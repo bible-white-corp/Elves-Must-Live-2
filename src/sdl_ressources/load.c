@@ -14,8 +14,38 @@ void load_blocks(struct game *game)
     if (!grass_text)
         warnx("cannot convert void_surface to SDL_Texture");
 
+    SDL_Texture *lava_text = IMG_LoadTexture(game->renderer,
+            LAVA_PATH);
+    if (!lava_text)
+        warnx("cannot convert lava_surface to SDL_Texture");
+
+
     game->texture_lib[VOID] = void_text;
     game->texture_lib[GRASS] = grass_text;
+    game->texture_lib[LAVA] = lava_text;
+
+}
+
+static void load_players_jump(struct game *game)
+{
+    SDL_Texture *prj_text = IMG_LoadTexture(game->renderer,
+            PRJUMP_PATH);
+    if (!prj_text)
+        warnx("cannot convert player right jump to SDL_Texture");
+
+    SDL_Texture *plj_text = IMG_LoadTexture(game->renderer,
+            PLJUMP_PATH);
+    if (!plj_text)
+        warnx("cannot convert player left jump to SDL_Texture");
+
+    SDL_Texture *pfj_text = IMG_LoadTexture(game->renderer,
+            PFJUMP_PATH);
+    if (!pfj_text)
+        warnx("cannot convert player front jump to SDL_Texture");
+
+    game->texture_lib[PRJ] = prj_text;
+    game->texture_lib[PLJ] = plj_text;
+    game->texture_lib[PFJ] = pfj_text;
 }
 
 void load_players(struct game *game)
@@ -55,6 +85,7 @@ void load_players(struct game *game)
     if (!pf_text)
         warnx("cannot convert player front to SDL_Texture");
 
+
     game->texture_lib[PL0] = pl0_text;
     game->texture_lib[PL1] = pl1_text;
     game->texture_lib[PL2] = pl2_text;
@@ -62,4 +93,5 @@ void load_players(struct game *game)
     game->texture_lib[PR1] = pr1_text;
     game->texture_lib[PR2] = pr2_text;
     game->texture_lib[PF] = pf_text;
+    load_players_jump(game);
 }
