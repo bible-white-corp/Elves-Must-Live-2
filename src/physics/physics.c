@@ -16,6 +16,10 @@ static float min(float a, float b)
 }
 
 
+static int is_between(float a, float borne1, float borne2)
+{
+    return borne1 < a && a < borne2;
+}
 
 int apply_gravity(struct map *map)
 {
@@ -93,6 +97,27 @@ static int check_col(struct character *player, struct line line)
 }
 
 
+/*
+static int check_col(struct character *player, struct line line)
+{
+    struct vec2 next = v_sum(player->position, player->velocity);
+
+    if (line.p1.x == line.p2.x) //vertical
+    {
+        if (is_between(next.y, line.p1.y, line.p2.y)
+            || is_between(next.y + player->size.y, line.p1.y, line.p2.y))
+            return is_between(line.p1.x, next.x, next.x + player->size.x);
+        return 0;
+    }
+
+    //horizontal
+    if (is_between(next.x, line.p1.x, line.p2.x)
+        || is_between(next.x + player->size.x, line.p1.x, line.p2.x))
+        return is_between(line.p1.y, next.y, next.y + player->size.y);
+    return 0;
+}
+*/
+
 static struct vec2 find_intersection(struct character *player, struct line l)
 {
     struct vec2 hitPlayer = player->position;
@@ -132,17 +157,10 @@ static void move(struct character *player)
 
 static void move_bounce(struct character *player, struct line l)
 {
-    struct vec2 inter = find_intersection(player, l);
-/*
-    if (player->velocity.x > 0)
-        inter.x -= player->size.x;
-    if (player->velocity.y > 0)
-        inter.y -= player->size.y;
-
-    player->position = inter;
-*/
     if (l.p1.x == l.p2.x) //collide avec un truc vertical
+    {
         player->velocity.x *= (-1);
+    }
     else
         player->velocity.y *= (-1);
     player->velocity = v_scale(player->velocity, BOUNCE);
@@ -176,12 +194,11 @@ int move_all(struct map *map)
         for (size_t j = 0; j < ndel; j++)
         {
             struct line delim = map->delims[j];
-            if (check_col(players[i], delim))
-            {
-                move_bounce(players[i], delim);
-                collided = 1;
-                break;
-            }
+            if (check_col(players[i], delim) == 0)
+                continue;
+            move_bounce(players[i], delim);
+            collided = 1;
+            break;
         }
         if (!collided)
             move(players[i]);
@@ -211,6 +228,109 @@ struct line l_create(float a, float b, float c, float d)
     return res;
 }
 
+
+
+struct line *remove_at_i(struct line *list, size_t i, size_t n)
+{
+    while (i < n - 1)
+    {
+        list[i] = list[i + 1];
+        i++;
+    }
+    return realloc(list, sizeof(struct line) * (n - 1));
+}
+
+void remove_redundancies(struct map *map)
+{
+    for (size_t i = 0; i < map->n_delims; i++)
+    {
+        for (size_t j = i + 1; j < map->n_delims; j++)
+        {
+            if (l_equal(map->delims[i], map->delims[j])
+                && l_equal(map->delims[i], map->delims[j]))
+            {
+                map->delims = remove_at_i(map->delims, j, map->n_delims);
+                map->n_delims--;
+                map->delims = remove_at_i(map->delims, i, map->n_delims);
+                map->n_delims--;
+                remove_redundancies(map);
+                return;
+            }
+        }
+    }
+}
+
+
+/*
+void compute_delims(struct map *map)
+{
+    size_t nblocks = 0;
+    size_t daffile = 0;
+    struct vec2 start;
+
+    for (int j = 0; j < WIDTH; j++)
+    {
+        for (int i = 0; i < HEIGHT; i++)
+        {
+            if (map->grid[i][j] == GRASS)
+            {
+                if (!daffile)
+                {
+                    start.x = i;
+                    start.y = j;
+                }
+
+                daffile++;
+            }
+            else
+            {
+                if (daffile)
+                {
+                    nblocks += 2;
+                    map->delims = realloc(map->delims, sizeof(struct line) * nblocks);
+                    map->delims[nblocks - 2] = l_create(start.x, start.y, i, j);
+                    map->delims[nblocks - 2] = l_create(start.x, start.y + 1, i, j + 1);
+                }
+                daffile = 0;
+            }
+        }
+    }
+
+    daffile = 0;
+
+
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        for (int j = 0; j < WIDTH; j++)
+        {
+            if (map->grid[i][j] == GRASS)
+            {
+                if (!daffile)
+                {
+                    start.x = i;
+                    start.y = j;
+                }
+
+                daffile++;
+            }
+            else
+            {
+                if (daffile)
+                {
+                    nblocks += 2;
+                    map->delims = realloc(map->delims, sizeof(struct line) * nblocks);
+                    map->delims[nblocks - 2] = l_create(start.x, start.y, i, j);
+                    map->delims[nblocks - 1] = l_create(start.x + 1, start.y, i + 1, j);
+                }
+                daffile = 0;
+            }
+        }
+    }
+    map->n_delims = nblocks;
+
+    remove_redundancies(map);
+}
+*/
 void compute_delims(struct map *map)
 {
     size_t nblocks = 0;
@@ -229,5 +349,21 @@ void compute_delims(struct map *map)
             }
         }
     }
+
     map->n_delims = nblocks;
+/*
+    for (size_t i = 0; i < map->n_delims; i++)
+    {
+        printf("delims[%ld] : (%.0f %.0f) (%.0f %.0f)\n", i, map->delims[i].p1.x, map->delims[i].p1.y, map->delims[i].p2.x, map->delims[i].p2.y);
+    }
+
+    printf("\n\n\n");
+*/
+    remove_redundancies(map);
+/*
+    for (size_t i = 0; i < map->n_delims; i++)
+    {
+        printf("delims[%ld] : (%.0f %.0f) (%.0f %.0f)\n", i, map->delims[i].p1.x, map->delims[i].p1.y, map->delims[i].p2.x, map->delims[i].p2.y);
+    }
+*/
 }
