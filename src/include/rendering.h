@@ -32,6 +32,14 @@
 #define EF_PATH "ressources/Ennemies/front.png"
 #define EFJ_PATH "ressources/Ennemies/frontjump.png"
 
+#define BG_PATH "ressources/Menus/background.png"
+#define CREDITS_PATH "ressources/Menus/credits.png"
+#define CREDITSS_PATH "ressources/Menus/creditsS.png"
+#define EML_PATH "ressources/Menus/eml.png"
+#define HISTORY_PATH "ressources/Menus/history.png"
+#define HISTORYS_PATH "ressources/Menus/historyS.png"
+#define QUICKGAME_PATH "ressources/Menus/quickgame.png"
+#define QUICKGAMES_PATH "ressources/Menus/quickgameS.png"
 
 #define TIMER_MAX 20
 #define TIMER_MAX2 10

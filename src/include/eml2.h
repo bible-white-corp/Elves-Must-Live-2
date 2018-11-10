@@ -36,7 +36,15 @@ enum block
     EL0 = 26,
     EL1 = 27,
     EF = 28,
-    EFJ = 29
+    EFJ = 29,
+    BG = 30,
+    CREDITS = 31,
+    CREDITSS = 32,
+    EML = 33,
+    HISTORY = 34,
+    HISTORYS = 35,
+    QUICKGAME = 35,
+    QUICKGAMES = 36
 };
 
 struct map

@@ -61,6 +61,15 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[EF]);
     SDL_DestroyTexture(game->texture_lib[EFJ]);
 
+    SDL_DestroyTexture(game->texture_lib[BG]);
+    SDL_DestroyTexture(game->texture_lib[CREDITS]);
+    SDL_DestroyTexture(game->texture_lib[CREDITSS]);
+    SDL_DestroyTexture(game->texture_lib[EML]);
+    SDL_DestroyTexture(game->texture_lib[HISTORY]);
+    SDL_DestroyTexture(game->texture_lib[HISTORYS]);
+    SDL_DestroyTexture(game->texture_lib[QUICKGAME]);
+    SDL_DestroyTexture(game->texture_lib[QUICKGAMES]);
+
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
     SDL_Quit();
@@ -153,7 +162,7 @@ static SDL_Texture *select_NPC_sprite(struct game *game,
         return game->texture_lib[EF];// a modif
     }
 
-    if (!is_ground)
+    if (!player->is_ground)
         return game->texture_lib[EFJ];
 
     if (dir == 1)
