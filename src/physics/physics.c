@@ -1,14 +1,14 @@
 #include "physics.h"
 
 
-float max(float a, float b)
+static float max(float a, float b)
 {
     if (a > b)
         return a;
     return b;
 }
 
-float min(float a, float b)
+static float min(float a, float b)
 {
     if (a < b)
         return a;
@@ -34,7 +34,7 @@ static int dir_points(struct vec2 a, struct vec2 b, struct vec2 c)
 }
 
 
-int is_equal(float a, float b)
+static int is_equal(float a, float b)
 {
     return a - EPSILON < b && a + EPSILON > b;
 }
@@ -56,29 +56,157 @@ int is_intersect(struct line l1, struct line l2)
 }
 
 
-/*
-int check_col(struct vec2 pos1, struct vec2 pos2, struct vec2 a, struct vec2 b)
+int apply_gravity(struct map *map)
 {
-    if (a.x == b.x && ) // horizontal
-        return (pos1.x > a.x) != (pos2.x > a.x);
-    else // vertical
-        return (pos1.y > a.y) != (pos2.y > a.y);
-    }
-}
-*/
-int apply_gravity(struct character **players, size_t n)
-{
+    struct character **players = map->players;
+    size_t n = map->n_players;
     struct vec2 gravity =
     {
         0, ACCELERATION
     };
 
     for (size_t i = 0; i < n; i++) //gravity
+        players[i]->velocity = v_sum(players[i]->velocity, gravity);
+
+    return 0;
+}
+
+static int check_col(struct character *player, struct line line)
+{
+    struct vec2 newpos = player->position;
+    struct vec2 v = player->velocity;
+    if (v.x > 0)
+        newpos.x += player->size.x;
+    if (v.y > 0)
+        newpos.y += player->size.y;
+    struct line dPlayer =
+        {
+            newpos, v_sum(newpos, player->velocity)
+        };
+    return is_intersect(dPlayer, line);
+    
+}
+
+static struct vec2 find_intersection(struct character *player, struct line l)
+{
+    struct vec2 res =
     {
-        struct vec2 newpos = v_sum(players[i]->velocity, gravity);
-        newpos = newpos;
-        
+        0, 0
+    };
+
+    struct line dPlayer =
+    {
+        player->position, v_sum(player->position, player->velocity)
+    };
+    if (l.p1.x == l.p2.x) //vertical
+    {
+        res.x = l.p1.x;
+        res.y = dPlayer.p1.y / player->position.x * l.p1.x;
+    }
+    else if (l.p1.y == l.p2.y)
+    {
+        res.y = l.p1.y;
+        res.x = dPlayer.p1.x / player->position.y * l.p1.y;
+    }
+    return res;
+}
+
+static void move(struct character *player)
+{
+    player->position = v_sum(player->position, player->velocity);
+}
+
+
+static void move_bounce(struct character *player, struct line l)
+{
+    struct vec2 inter = find_intersection(player, l);
+
+    player->position = inter;
+    if (l.p1.x == l.p2.x) //collide avec un truc vertical
+        player->velocity.x *= (-1);
+    else
+        player->velocity.y *= (-1);
+    player->velocity = v_scale(player->velocity, BOUNCE);
+    move(player);
+}
+
+
+void move_left(struct character *player)
+{
+    player->velocity.x = -MOVE_SPEED;
+}
+
+void move_right(struct character *player)
+{
+    player->velocity.x = MOVE_SPEED;
+}
+
+void move_jump(struct character *player)
+{
+    player->velocity.y = -JUMP;
+}
+
+int move_all(struct map *map)
+{
+    struct character **players = map->players;
+    size_t n = map->n_players;
+    for (size_t i = 0; i < n; i++)
+    {
+        short collided = 0;
+        size_t ndel = players[0]->map->n_delims;
+        for (size_t j = 0; j < ndel; j++)
+        {
+            struct line delim = players[0]->map->delims[j];
+            if (check_col(players[i], delim))
+            {
+                move_bounce(players[i], delim);
+                collided = 1;
+                break;
+            }
+        }
+        if (!collided)
+            move(players[i]);
     }
 
     return 0;
+}
+
+
+struct line l_create(float a, float b, float c, float d)
+{
+    struct vec2 v1 =
+    {
+        a, b
+    };
+    struct vec2 v2 =
+    {
+        c, d
+    };
+
+    struct line res =
+    {
+        v1, v2
+    };
+    return res;
+}
+
+void compute_delims(struct map *map)
+{
+    size_t nblocks = 0;
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        for (int j = 0; i < WIDTH; j++)
+        {
+            if (map->grid[i][j] == GRASS)
+            {
+                nblocks += 4;
+                map->delims = realloc(map->delims, sizeof(struct line) * nblocks);
+                map->delims[nblocks - 4] = l_create(i, j, i + 1, j);
+                map->delims[nblocks - 3] = l_create(i, j, i, j + 1);
+                map->delims[nblocks - 2] = l_create(i + 1, j + 1, i + 1, j);
+                map->delims[nblocks - 1] = l_create(i + 1, j + 1, i, j + 1);
+            }
+        }
+    }
+    map->n_delims = nblocks;
 }

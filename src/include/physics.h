@@ -4,15 +4,16 @@
 #include <math.h>
 
 #define ACCELERATION 0.1f
-#define BOUNCE 0.2f
+#define BOUNCE 0.7f
 #define EPSILON 0.0001f
-struct line
-{
-    struct vec2 p1;
-    struct vec2 p2;
-};
+#define MOVE_SPEED 1
+#define JUMP 4
 
+int apply_gravity(struct map *map);
+int move_all(struct map *map);
 
-struct vec2 check_col(struct vec2 pos1, struct vec2 pos2, struct vec2 a, struct vec2 b);
-int apply_gravity(struct character **players, size_t n);
 int is_intersect(struct line l1, struct line l2);
+
+void move_left(struct character *player);
+void move_right(struct character *player);
+void move_jump(struct character *player);
