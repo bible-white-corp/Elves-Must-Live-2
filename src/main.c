@@ -3,12 +3,14 @@
 #include "eml2.h"
 #include "rendering.h"
 #include "parser.h"
+#include "inputs.h"
 
 void init_game(struct game *game)
 {
     game->is_playing = 1;
     game->map = malloc(sizeof(struct map));
     map_parse("src/map.eml", game->map);
+    //compute_delims(game->map);
     game->texture_lib = calloc(10, sizeof(SDL_Texture*));
 
     // Init SDL2 stuff
@@ -34,10 +36,10 @@ int main(void)
     while (game.is_playing)
     {
         // Get keyboard inputs
-        //struct input in = get_input();
+        struct inputs in = get_inputs();
 
         // Call physics funcs
-        //update(&game, in);
+        update(&game, in);
 
         // Render new frame
         render_frame(&game);
