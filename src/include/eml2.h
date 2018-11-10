@@ -16,13 +16,17 @@ enum block
 {
     VOID = 0,
     GRASS = 1,
+    LAVA = 2,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
     PR0 = 13,
     PR1 = 14,
     PR2 = 15,
-    PF = 16
+    PF = 16,
+    PLJ = 17,
+    PRJ = 18,
+    PFJ = 19
 };
 
 struct map
@@ -52,6 +56,7 @@ struct game
 {
     short is_playing;
     struct map *map;
+    int timer;
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture **texture_lib;
