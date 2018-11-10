@@ -116,48 +116,43 @@ static void render_QUITS(struct game *game)
     SDL_RenderCopy(game->renderer, game->texture_lib[DOORS], NULL, &dstrect);
 }
 
-int main_menu(struct game *game, char *menu)
+int main_menu(struct game *game)
 {
     render_BG(game);
     render_EML(game);
     SDL_PumpEvents();
     int x;
     int y;
-
-    SDL_GetMouseState(&x, &y);
-    if (x > 300 && x < 500 && y < 326 && y > 276)
+    Uint8 mouse_state = SDL_GetMouseState(&x, &y);
+    if (mouse_state & SDL_BUTTON_LMASK)
     {
-        render_QUICKGAMES(game);
-        if (SDL_BUTTON(SDL_BUTTON_LEFT))
-            game->is_playing = 1;
+        if (x > 300 && x < 500 && y < 326 && y > 276)
+            return 1;
+        if (x > 300 && x < 500 && y > 356 && y < 40)
+            x=x;
+        if (x > 300 && x < 500 && y > 516 && y < 566)
+            x=x;
+        if (x > 720 && x < 770 && y > 560 && y < 610)
+            return -1;
     }
+
+    if (x > 300 && x < 500 && y < 326 && y > 276)
+        render_QUICKGAMES(game);
     else
         render_QUICKGAME(game);
 
-    if (x > 300 && x < 500 && y > 356 && y < 406)
-    {
+    if (x > 300 && x < 500 && y > 356 && y < 40)
         render_HISTORYS(game);
-        if (SDL_BUTTON(SDL_BUTTON_LEFT))
-            x=x;
-    }
     else
         render_HISTORY(game);
 
     if (x > 300 && x < 500 && y > 516 && y < 566)
-    {
         render_CREDITSS(game);
-        if (SDL_BUTTON(SDL_BUTTON_LEFT))
-            x=x;
-    }
     else
         render_CREDITS(game);
 
     if (x > 720 && x < 770 && y > 560 && y < 610)
-    {
         render_QUITS(game);
-        if (SDL_BUTTON(SDL_BUTTON_LEFT))
-            *menu = 0;
-    }
     else
         render_QUIT(game);
 
@@ -165,5 +160,5 @@ int main_menu(struct game *game, char *menu)
 
     SDL_Delay(50);
     SDL_RenderPresent(game->renderer);
-    return 1;
+    return 0;
 }
