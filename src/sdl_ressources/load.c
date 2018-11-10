@@ -48,6 +48,34 @@ static void load_players_jump(struct game *game)
     game->texture_lib[PFJ] = pfj_text;
 }
 
+void load_players_attacks(struct game *game)
+{
+    SDL_Texture *ar0_text = IMG_LoadTexture(game->renderer,
+            AR0_PATH);
+    if (!ar0_text)
+        warnx("cannot convert player attack right 0 to SDL_Texture");
+
+    SDL_Texture *ar1_text = IMG_LoadTexture(game->renderer,
+            AR1_PATH);
+    if (!ar1_text)
+        warnx("cannot convert player attack right 1 to SDL_Texture");
+
+    SDL_Texture *al0_text = IMG_LoadTexture(game->renderer,
+            AL0_PATH);
+    if (!al0_text)
+        warnx("cannot convert player attack left 0 to SDL_Texture");
+
+    SDL_Texture *al1_text = IMG_LoadTexture(game->renderer,
+            AL1_PATH);
+    if (!al1_text)
+        warnx("cannot convert player attack left 1 to SDL_Texture");
+
+    game->texture_lib[AR0] = ar0_text;
+    game->texture_lib[AR1] = ar1_text;
+    game->texture_lib[AL0] = al0_text;
+    game->texture_lib[AL1] = al1_text;
+}
+
 void load_players(struct game *game)
 {
     SDL_Texture *pr0_text = IMG_LoadTexture(game->renderer,
@@ -94,4 +122,5 @@ void load_players(struct game *game)
     game->texture_lib[PR2] = pr2_text;
     game->texture_lib[PF] = pf_text;
     load_players_jump(game);
+    load_players_attacks(game);
 }

@@ -1,3 +1,5 @@
 *.pdf
 *.o
 *.out
+main
+eml2

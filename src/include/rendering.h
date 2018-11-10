@@ -12,7 +12,6 @@
 #define PL2_PATH "ressources/Player/left2.png"
 #define PLJUMP_PATH "ressources/Player/leftjump.png"
 
-
 #define PR0_PATH "ressources/Player/right0.png"
 #define PR1_PATH "ressources/Player/right1.png"
 #define PR2_PATH "ressources/Player/right2.png"
@@ -21,8 +20,18 @@
 #define PF_PATH "ressources/Player/front.png"
 #define PFJUMP_PATH "ressources/Player/frontjump.png"
 
+#define AR0_PATH "ressources/Player/attackingright0.png"
+#define AR1_PATH "ressources/Player/attackingright1.png"
+#define AL0_PATH "ressources/Player/attackingleft0.png"
+#define AL1_PATH "ressources/Player/attackingleft1.png"
+
+
 
 #define TIMER_MAX 20
+#define TIMER_MAX2 10
+
+#define TIMER_MAX_ATTACK 30
+#define TIMER_MAX_ATTACK2 15
 
 //load.c
 void load_blocks(struct game *game);

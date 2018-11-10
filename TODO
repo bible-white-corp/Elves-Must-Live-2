@@ -5,6 +5,8 @@ Display
 [V] Destroy
 [V] Rendering
 [-] Render players
+[-] Use rpev orientation
+[-] Render attacks
 [-] Render Ennemies
 
 Physics

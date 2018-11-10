@@ -49,7 +49,10 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[PFJ]);
     SDL_DestroyTexture(game->texture_lib[PRJ]);
     SDL_DestroyTexture(game->texture_lib[PLJ]);
-
+    SDL_DestroyTexture(game->texture_lib[AR0]);
+    SDL_DestroyTexture(game->texture_lib[AR1]);
+    SDL_DestroyTexture(game->texture_lib[AL0]);
+    SDL_DestroyTexture(game->texture_lib[AL1]);
 
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
@@ -71,57 +74,97 @@ static int get_timer(struct game *game)
     return res;
 }
 
+static int get_attack_timer(struct game *game)
+{
+    int res = game->is_attacking;
+    game->is_attacking += 1;
+    if (game->is_attacking > TIMER_MAX_ATTACK)
+        game->is_attacking = 0;
+    return res;
+}
+
+static SDL_Texture *attacking(struct game *game, struct character *player)
+{
+    int  timer = get_attack_timer(game);
+    int index = timer / TIMER_MAX_ATTACK2;
+    int dir = player->orientation;
+    if (dir == 0)
+    {
+        if (!player->orientation)
+            return game->texture_lib[AL0];
+        return game->texture_lib[PF];//a modif
+    }
+
+    if (dir == 1)
+    {
+        if (index == 0)
+            return game->texture_lib[AL0];
+        return game->texture_lib[AL1];
+    }
+
+    if (index == 0)
+        return game->texture_lib[AR0];
+    return game->texture_lib[AR1];
+
+}
+
 static SDL_Texture *select_player_sprite(struct game *game,
         struct character *player)
 {
+    if (player->is_attacking)
+        return attacking(game, player);
+
     int timer = get_timer(game);
-    int index = timer / 10;
-    int dir = player->velocity.x > 0.001f ?
-        -1 :
-        (player->velocity.x <= -0.001f ? 1 : 0);
+    int index = timer / TIMER_MAX2;
+    int dir = player->orientation;
     if (dir == 0)
     {
-        if (player->velocity.y < 0.1 && player->velocity.y > -0.1 )
+        if (!player->orientation)
             return game->texture_lib[PF];
-        return game->texture_lib[PFJ];
+        return game->texture_lib[PF];// a modif
     }
     if (dir == 1)
     {
-        if (player->velocity.y >= 0.1 || player->velocity.y <= -0.1)
+        if (!is_ground)
             return game->texture_lib[PLJ];
         if (index == 0)
             return game->texture_lib[PL0];
         /*else if (index == 1)
-            return game->texture_lib[PL1];*/
+          return game->texture_lib[PL1];*/
         return game->texture_lib[PL2];
     }
-    if (player->velocity.y >= 0.1 ||player->velocity.y <= -0.1)
-            return game->texture_lib[PRJ];
-        if (index == 0)
-            return game->texture_lib[PR0];
-        /*else if (index == 1)
-            return game->texture_lib[PR1];*/
-        return game->texture_lib[PR2];
+    if (!player->is_ground)
+        return game->texture_lib[PRJ];
+    if (index == 0)
+        return game->texture_lib[PR0];
+    /*else if (index == 1)
+      return game->texture_lib[PR1];*/
+    return game->texture_lib[PR2];
 
 }
+
 void render_players(struct game *game)
 {
     for (size_t i = 0; i < game->map->n_players; i++)
     {
         SDL_Rect dstrect;
-            dstrect.x = game->map->players[i]->position.x * BLOCK_SIZE;
-            dstrect.y = game->map->players[i]->position.y * BLOCK_SIZE;
-            dstrect.w = BLOCK_SIZE;
-            dstrect.h = 2 * BLOCK_SIZE;
+        dstrect.x = game->map->players[i]->position.x * BLOCK_SIZE;
+        dstrect.y = game->map->players[i]->position.y * BLOCK_SIZE;
+        dstrect.w = BLOCK_SIZE;
+        dstrect.h = 2 * BLOCK_SIZE;
 
-            struct character *player = game->map->players[i];
-            SDL_Texture *text;
-            if (!player->is_player)
-                text = select_player_sprite(game, player);
-            else
-                text= NULL;
+        struct character *player = game->map->players[i];
+        SDL_Texture *text;
+        if (!player->is_player)
+            text = select_player_sprite(game, player);
+        else
+            text= NULL;
 
-            SDL_RenderCopy(game->renderer, text, NULL, &dstrect);
+        //attacking left
+        if (player->is_attacking && player->orientation == -1)
+            dstrect.x -= BLOCK_SIZE;
+
+        SDL_RenderCopy(game->renderer, text, NULL, &dstrect);
     }
 }
 
