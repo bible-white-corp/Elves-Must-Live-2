@@ -89,11 +89,7 @@ static SDL_Texture *attacking(struct game *game, struct character *player)
     int index = timer / TIMER_MAX_ATTACK2;
     int dir = player->orientation;
     if (dir == 0)
-    {
-        if (!player->orientation)
-            return game->texture_lib[AL0];
-        return game->texture_lib[PF];//a modif
-    }
+        return game->texture_lib[AL0];
 
     if (dir == 1)
     {
@@ -119,26 +115,24 @@ static SDL_Texture *select_player_sprite(struct game *game,
     int dir = player->orientation;
     if (dir == 0)
     {
-        if (!player->orientation)
-            return game->texture_lib[PF];
         return game->texture_lib[PF];// a modif
     }
+
     if (dir == 1)
     {
         if (!is_ground)
             return game->texture_lib[PLJ];
-        if (index == 0)
+        if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+                ||index == 0)
             return game->texture_lib[PL0];
-        /*else if (index == 1)
-          return game->texture_lib[PL1];*/
         return game->texture_lib[PL2];
     }
+
     if (!player->is_ground)
         return game->texture_lib[PRJ];
-    if (index == 0)
+    if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+                ||index == 0)
         return game->texture_lib[PR0];
-    /*else if (index == 1)
-      return game->texture_lib[PR1];*/
     return game->texture_lib[PR2];
 
 }
@@ -155,10 +149,10 @@ void render_players(struct game *game)
 
         struct character *player = game->map->players[i];
         SDL_Texture *text;
-        if (!player->is_player)
+        if (player->is_player)
             text = select_player_sprite(game, player);
         else
-            text= NULL;
+            text= select_NPC_sprite(game, player);
 
         //attacking left
         if (player->is_attacking && player->orientation == -1)
