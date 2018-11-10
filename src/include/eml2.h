@@ -12,6 +12,12 @@
 
 #include "vector.h"
 
+enum block
+{
+    VOID = 0,
+    GRASS = 1
+};
+
 struct map
 {
     struct character **players;
@@ -20,7 +26,7 @@ struct map
     struct vec2 *delims;
     size_t n_delims_duos; //n * 2 delims presents
 
-    char **grid; //grid[height][width] merci Louis
+    enum block **grid; //grid[height][width] merci Louis
 };
 
 struct character
@@ -33,12 +39,6 @@ struct character
     struct vec2 position;
     struct vec2 velocity;
     struct vec2 acceleration;
-};
-
-enum block
-{
-    VOID = 0,
-    GRASS = 1
 };
 
 struct game
