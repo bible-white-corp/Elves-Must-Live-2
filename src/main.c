@@ -7,6 +7,7 @@
 void init_game(struct game *game)
 {
     game->is_playing = 1;
+    game->map = malloc(sizeof(struct map));
     map_parse("src/map.eml", game->map);
     game->texture_lib = calloc(10, sizeof(SDL_Texture*));
 
@@ -20,6 +21,7 @@ void destroy_game(struct game *game)
     // Free stuff
     map_delete(game->map);
     destroy_sdl(game);
+    free(game->map);
     free(game->texture_lib);
 }
 

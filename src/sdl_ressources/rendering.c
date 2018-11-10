@@ -45,25 +45,15 @@ void destroy_sdl(struct game *game)
 
 void load_textures(struct game *game)
 {
-    SDL_Surface *grass_surface = IMG_Load(GRASS_PATH);
-    if (!grass_surface)
-        warnx("cannot load %s", GRASS_PATH);
-
-    SDL_Surface *void_surface = IMG_Load(VOID_PATH);
-    if (!void_surface)
-        warnx("cannot load %s", VOID_PATH);
-
-    SDL_Texture *grass_text = SDL_CreateTextureFromSurface(game->renderer,
-            grass_surface);
+    SDL_Texture *grass_text = IMG_LoadTexture(game->renderer,
+            GRASS_PATH);
     if (!grass_text)
         warnx("cannot convert grass_surface to SDL_Texture");
-    SDL_FreeSurface(grass_surface);
 
-    SDL_Texture *void_text = SDL_CreateTextureFromSurface(game->renderer,
-            void_surface);
+    SDL_Texture *void_text = IMG_LoadTexture(game->renderer,
+            VOID_PATH);
     if (!grass_text)
         warnx("cannot convert void_surface to SDL_Texture");
-    SDL_FreeSurface(void_surface);
 
     game->texture_lib[VOID] = void_text;
     game->texture_lib[GRASS] = grass_text;
@@ -79,22 +69,18 @@ void render_frame(struct game *game)
     {
         for (int i = 0; i < imax; i++)
         {
-            SDL_Rect srcrect;
             SDL_Rect dstrect;
-            srcrect.x = 0;
-            srcrect.y = 0;
-            srcrect.w = BLOCK_SIZE;
-            srcrect.h = BLOCK_SIZE;
 
             dstrect.x = i * BLOCK_SIZE;
             dstrect.y = j * BLOCK_SIZE;
-            dstrect.w = WIN_WIDTH;
-            dstrect.h = WIN_HEIGHT;
+            dstrect.w = BLOCK_SIZE;
+            dstrect.h = BLOCK_SIZE;
 
             SDL_RenderCopy(game->renderer,
                     game->texture_lib[game->map->grid[j][i]],
-                    &srcrect,
+                    NULL,
                     &dstrect);
         }
     }
+    SDL_RenderPresent(game->renderer);
 }
