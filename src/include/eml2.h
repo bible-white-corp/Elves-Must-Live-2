@@ -51,6 +51,7 @@ struct character
 
     short is_ground;
     short orientation;
+    short is_attacking;
 
     short is_dead;
 

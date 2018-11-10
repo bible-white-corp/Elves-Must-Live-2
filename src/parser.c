@@ -38,9 +38,10 @@ static void add_player(int i, int j, struct map *map, short is_player)
     map->players[cur]->position = pos;
     map->players[cur]->size = size;
     map->players[cur]->map = map;
-    map->players[cur]->is_ground = 0;
+    map->players[cur]->is_ground = 1;
     map->players[cur]->orientation = 1;
     map->players[cur]->is_dead = 0;
+    map->players[cur]->is_attacking = 0;
     if (is_player)
         map->players[0]->is_player = 1;
 }

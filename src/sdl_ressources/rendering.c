@@ -74,18 +74,18 @@ static int get_timer(struct game *game)
     return res;
 }
 
-static int get_attack_timer(struct game *game)
+static int get_attack_timer(struct character *player)
 {
-    int res = game->is_attacking;
-    game->is_attacking += 1;
-    if (game->is_attacking > TIMER_MAX_ATTACK)
-        game->is_attacking = 0;
+    int res = player->is_attacking;
+    player->is_attacking += 1;
+    if (player->is_attacking > TIMER_MAX_ATTACK)
+        player->is_attacking = 0;
     return res;
 }
 
 static SDL_Texture *attacking(struct game *game, struct character *player)
 {
-    int  timer = get_attack_timer(game);
+    int  timer = get_attack_timer(player);
     int index = timer / TIMER_MAX_ATTACK2;
     int dir = player->orientation;
     if (dir == 0)
@@ -95,7 +95,7 @@ static SDL_Texture *attacking(struct game *game, struct character *player)
         return game->texture_lib[PF];//a modif
     }
 
-    if (dir == 1)
+    if (dir == -1)
     {
         if (index == 0)
             return game->texture_lib[AL0];
@@ -123,9 +123,9 @@ static SDL_Texture *select_player_sprite(struct game *game,
             return game->texture_lib[PF];
         return game->texture_lib[PF];// a modif
     }
-    if (dir == 1)
+    if (dir == -1)
     {
-        if (!is_ground)
+        if (!player->is_ground)
             return game->texture_lib[PLJ];
         if (index == 0)
             return game->texture_lib[PL0];
