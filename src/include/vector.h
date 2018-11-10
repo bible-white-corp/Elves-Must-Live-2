@@ -25,3 +25,5 @@ struct vec2 v_norm(struct vec2 v);
 
 double v_cross(struct vec2 a, struct vec2 b);
 void v_print(struct vec2 a);
+
+int l_equal(struct line a, struct line b);

@@ -71,3 +71,22 @@ void v_print(struct vec2 a)
 {
     printf("x: %f\ny: %f\n\n", a.x, a.y);
 }
+
+
+int l_equal(struct line a, struct line b)
+{
+    if ((a.p1.x == b.p1.x)
+        && (a.p1.y == b.p1.y)
+        && (a.p2.x == b.p2.x)
+        && (a.p2.y == b.p2.y))
+        return 1;
+
+    struct vec2 temp = a.p1;
+    a.p1 = a.p2;
+    a.p2 = temp;
+
+    return (a.p1.x == b.p1.x)
+        && (a.p1.y == b.p1.y)
+        && (a.p2.x == b.p2.x)
+        && (a.p2.y == b.p2.y);
+}
