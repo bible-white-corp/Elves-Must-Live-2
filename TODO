@@ -1,0 +1,17 @@
+Elves Must Live List of tasks:
+
+Display
+[V] Init
+[V] Destroy
+[V] Rendering
+
+Physics
+[V] Basic functions
+[V] Collision
+[-] Bounds
+[-] Iter gravity
+
+Gameplay
+[V] Parser
+[-] Inputs
+[-] Main
