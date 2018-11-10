@@ -163,10 +163,10 @@ void move_jump(struct character *player)
 }
 
 
-int p_is_in(struct vec2 point, struct character *p)
+int p_is_in(struct vec2 point, struct vec2 origin, struct vec2 size)
 {
-    return is_between(point.x, p->position.x, p->position.x + p->size.x)
-        && is_between(point.y, p->position.y, p->position.y + p->size.y);
+    return is_between(point.x, origin.x, origin.x + size.x)
+        && is_between(point.y, origin.y, origin.y + size.y);
 }
 
 int is_in(struct character *player, struct character *ennemy)
@@ -178,7 +178,31 @@ int is_in(struct character *player, struct character *ennemy)
             player->position.x + player->size.x * (i / 2),
             player->position.y + player->size.y * (i % 2)
         };
-        if (p_is_in(border, ennemy))
+        if (p_is_in(border, ennemy->position, ennemy->size))
+            return 1;
+    }
+    return 0;
+}
+
+int is_in_lava(struct character *player, int i, int j)
+{
+    struct vec2 origin =
+    {
+        i, j
+    };
+    struct vec2 size =
+    {
+        1, 1
+    };
+
+    for (int i = 0; i < 4; i++)
+    {
+        struct vec2 border =
+        {
+            player->position.x + player->size.x * (i / 2),
+            player->position.y + player->size.y * (i % 2)
+        };
+        if (p_is_in(border, origin, size))
             return 1;
     }
     return 0;
@@ -186,11 +210,25 @@ int is_in(struct character *player, struct character *ennemy)
 
 int is_dead(struct map *map)
 {
-    for (size_t i = 1; i < map->n_players; i++)
+    struct character *player = map->players[0];
+    for (size_t i = 1; i < map->n_players; i++) //ennemies handling
     {
-        if (is_in(map->players[0], map->players[i]))
+        if (is_in(player, map->players[i]))
             return 1;
     }
+
+    for (int i = 0; i < WIDTH; i++)
+    {
+        for (int j = 0; j < HEIGHT; j++)
+        {
+            if (map->grid[j][i] == LAVA)
+            {
+                if (is_in_lava(player, i, j))
+                    return 1;
+            }
+        }
+    }
+    
     return 0;
 }
 
@@ -215,7 +253,10 @@ int move_all(struct map *map)
         if (!collided)
             move(players[i]);
     }
+
     if (is_dead(map))
+        return -1;
+    if (map->players[0]->position.y > HEIGHT + 5)
         return -1;
     return 0;
 }
