@@ -9,7 +9,7 @@
 
 #define PL0_PATH "ressources/Player/left0.png"
 #define PL1_PATH "ressources/Player/left1.png"
-#define PL2_PATH "ressources/Player/left1.png"
+#define PL2_PATH "ressources/Player/left2.png"
 #define PLJUMP_PATH "ressources/Player/leftjump.png"
 
 
@@ -22,7 +22,7 @@
 #define PFJUMP_PATH "ressources/Player/frontjump.png"
 
 
-#define TIMER_MAX 90
+#define TIMER_MAX 20
 
 //load.c
 void load_blocks(struct game *game);

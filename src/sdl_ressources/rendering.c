@@ -75,17 +75,19 @@ static SDL_Texture *select_player_sprite(struct game *game,
         struct character *player)
 {
     int timer = get_timer(game);
-    int index = timer / 45;
-    int dir = player->velocity.x > 0 ? -1 : player->velocity.x == 0 ? 0 : 1;
+    int index = timer / 10;
+    int dir = player->velocity.x > 0.001f ?
+        -1 :
+        (player->velocity.x <= -0.001f ? 1 : 0);
     if (dir == 0)
     {
-        if (player->velocity.y < 0.1 ||player->velocity.y > -0.1 )
+        if (player->velocity.y < 0.1 && player->velocity.y > -0.1 )
             return game->texture_lib[PF];
         return game->texture_lib[PFJ];
     }
     if (dir == 1)
     {
-        if (player->velocity.y >= 0.1 ||player->velocity.y <= -0.1)
+        if (player->velocity.y >= 0.1 || player->velocity.y <= -0.1)
             return game->texture_lib[PLJ];
         if (index == 0)
             return game->texture_lib[PL0];
