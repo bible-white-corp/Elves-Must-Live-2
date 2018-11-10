@@ -54,6 +54,13 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[AL0]);
     SDL_DestroyTexture(game->texture_lib[AL1]);
 
+    SDL_DestroyTexture(game->texture_lib[EL1]);
+    SDL_DestroyTexture(game->texture_lib[EL0]);
+    SDL_DestroyTexture(game->texture_lib[ER1]);
+    SDL_DestroyTexture(game->texture_lib[ER0]);
+    SDL_DestroyTexture(game->texture_lib[EF]);
+    SDL_DestroyTexture(game->texture_lib[EFJ]);
+
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
     SDL_Quit();
@@ -133,8 +140,38 @@ static SDL_Texture *select_player_sprite(struct game *game,
                 ||index == 0)
         return game->texture_lib[PR0];
     return game->texture_lib[PR2];
-
 }
+
+static SDL_Texture *select_NPC_sprite(struct game *game,
+        struct character *player)
+{
+    int timer = get_timer(game);
+    int index = timer / TIMER_MAX2;
+    int dir = player->orientation;
+    if (dir == 0)
+    {
+        return game->texture_lib[EF];// a modif
+    }
+
+    if (!is_ground)
+        return game->texture_lib[EFJ];
+
+    if (dir == 1)
+    {
+
+        if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+                ||index == 0)
+            return game->texture_lib[EL0];
+        return game->texture_lib[EL1];
+    }
+
+
+    if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+                ||index == 0)
+        return game->texture_lib[ER0];
+    return game->texture_lib[ER1];
+}
+
 
 void render_players(struct game *game)
 {

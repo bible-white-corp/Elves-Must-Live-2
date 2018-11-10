@@ -30,7 +30,13 @@ enum block
     AL0 = 20,
     AL1 = 21,
     AR0 = 22,
-    AR1 = 23
+    AR1 = 23,
+    ER0 = 24,
+    ER1 = 25,
+    EL0 = 26,
+    EL1 = 27,
+    EF = 28,
+    EFJ = 29
 };
 
 struct map

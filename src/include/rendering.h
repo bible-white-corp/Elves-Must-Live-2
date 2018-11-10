@@ -25,6 +25,12 @@
 #define AL0_PATH "ressources/Player/attackingleft0.png"
 #define AL1_PATH "ressources/Player/attackingleft1.png"
 
+#define EL0_PATH "ressources/Ennemies/left0.png"
+#define EL1_PATH "ressources/Ennemies/left1.png"
+#define ER0_PATH "ressources/Ennemies/right0.png"
+#define ER1_PATH "ressources/Ennemies/right1.png"
+#define EF_PATH "ressources/Ennemies/front.png"
+#define EFJ_PATH "ressources/Ennemies/frontjump.png"
 
 
 #define TIMER_MAX 20

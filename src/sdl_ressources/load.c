@@ -26,6 +26,48 @@ void load_blocks(struct game *game)
 
 }
 
+void load_ennemies(struct game *game)
+{
+    SDL_Texture *er0_text = IMG_LoadTexture(game->renderer,
+            ER0_PATH);
+    if (!er0_text)
+        warnx("cannot convert ennemy right 0 to SDL_Texture");
+
+    SDL_Texture *er1_text = IMG_LoadTexture(game->renderer,
+            ER1_PATH);
+    if (!er1_text)
+        warnx("cannot convert ennemy right 1 to SDL_Texture");
+
+    SDL_Texture *el1_text = IMG_LoadTexture(game->renderer,
+            EL1_PATH);
+    if (!el1_text)
+        warnx("cannot convert ennemy left 1 to SDL_Texture");
+
+    SDL_Texture *el1_text = IMG_LoadTexture(game->renderer,
+            EL1_PATH);
+    if (!el1_text)
+        warnx("cannot convert ennemy left 1 to SDL_Texture");
+
+    SDL_Texture *ef_text = IMG_LoadTexture(game->renderer,
+            EF_PATH);
+    if (!ef_text)
+        warnx("cannot convert ennemy front to SDL_Texture");
+
+    SDL_Texture *efj_text = IMG_LoadTexture(game->renderer,
+            ELJ_PATH);
+    if (!efj_text)
+        warnx("cannot convert ennemy front jump to SDL_Texture");
+
+
+    game->texture_lib[ER0] = er0_text;
+    game->texture_lib[ER1] = er1_text;
+    game->texture_lib[EL0] = el0_text;
+    game->texture_lib[EL1] = el1_text;
+    game->texture_lib[EF] = ef_text;
+    game->texture_lib[EFJ] = efj_text;
+
+}
+
 static void load_players_jump(struct game *game)
 {
     SDL_Texture *prj_text = IMG_LoadTexture(game->renderer,
