@@ -4,6 +4,7 @@
 
 struct inputs
 {
+    short attack;
     short left;
     short right;
     short jump;
