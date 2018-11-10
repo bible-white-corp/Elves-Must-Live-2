@@ -4,6 +4,8 @@ Display
 [V] Init
 [V] Destroy
 [V] Rendering
+[-] Render players
+[-] Render Ennemies
 
 Physics
 [V] Basic functions

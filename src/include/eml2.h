@@ -15,7 +15,15 @@
 enum block
 {
     VOID = 0,
-    GRASS = 1
+    GRASS = 1,
+    PL0 = 10,
+    PL1 = 11,
+    PL2 = 12,
+    PR0 = 13,
+    PR1 = 14,
+    PR2 = 15,
+    PF = 16
+
 };
 
 struct map

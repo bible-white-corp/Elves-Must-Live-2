@@ -45,18 +45,25 @@ void destroy_sdl(struct game *game)
 
 void load_textures(struct game *game)
 {
-    SDL_Texture *grass_text = IMG_LoadTexture(game->renderer,
-            GRASS_PATH);
-    if (!grass_text)
-        warnx("cannot convert grass_surface to SDL_Texture");
+    load_blocks(game);
+    load_players(game);
+}
 
-    SDL_Texture *void_text = IMG_LoadTexture(game->renderer,
-            VOID_PATH);
-    if (!grass_text)
-        warnx("cannot convert void_surface to SDL_Texture");
+void render_players(struct game *game)
+{
+    for (size_t i = 0; i < game->map->n_players; i++)
+    {
+        SDL_Rect dstrect;
+            dstrect.x = game->map->players[i]->position.x * BLOCK_SIZE;
+            dstrect.y = game->map->players[i]->position.y * BLOCK_SIZE;
+            dstrect.w = BLOCK_SIZE;
+            dstrect.h = 2 * BLOCK_SIZE;
 
-    game->texture_lib[VOID] = void_text;
-    game->texture_lib[GRASS] = grass_text;
+            SDL_RenderCopy(game->renderer,
+                    game->texture_lib[PL0],
+                    NULL,
+                    &dstrect);
+    }
 }
 
 void render_frame(struct game *game)
