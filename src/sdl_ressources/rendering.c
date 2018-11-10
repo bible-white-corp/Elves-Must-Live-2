@@ -128,7 +128,7 @@ static SDL_Texture *select_player_sprite(struct game *game,
     {
         if (!player->is_ground)
             return game->texture_lib[PLJ];
-        if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+        if ((player->velocity.x > -0.05 && player->velocity.x < 0.05)
                 ||index == 0)
             return game->texture_lib[PL0];
         return game->texture_lib[PL2];
@@ -136,7 +136,7 @@ static SDL_Texture *select_player_sprite(struct game *game,
 
     if (!player->is_ground)
         return game->texture_lib[PRJ];
-    if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+    if ((player->velocity.x > -0.05 && player->velocity.x < 0.05)
                 ||index == 0)
         return game->texture_lib[PR0];
     return game->texture_lib[PR2];
@@ -159,14 +159,14 @@ static SDL_Texture *select_NPC_sprite(struct game *game,
     if (dir == 1)
     {
 
-        if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+        if ((player->velocity.x > -0.05 && player->velocity.x < 0.05)
                 ||index == 0)
             return game->texture_lib[EL0];
         return game->texture_lib[EL1];
     }
 
 
-    if ((player->velocity.x > -0.05 && player.velocity.x < 0.05)
+    if ((player->velocity.x > -0.05 && player->velocity.x < 0.05)
                 ||index == 0)
         return game->texture_lib[ER0];
     return game->texture_lib[ER1];
