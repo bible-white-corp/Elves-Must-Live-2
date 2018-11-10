@@ -14,6 +14,6 @@ int move_all(struct map *map);
 
 int is_intersect(struct line l1, struct line l2);
 
-void move_left(struct character *player);
-void move_right(struct character *player);
-void move_jump(struct character *player);
+void move_left(struct map *map);
+void move_right(struct map *map);
+void move_jump(struct map *map);

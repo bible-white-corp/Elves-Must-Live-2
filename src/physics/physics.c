@@ -131,19 +131,19 @@ static void move_bounce(struct character *player, struct line l)
 }
 
 
-void move_left(struct character *player)
+void move_left(struct map *map)
 {
-    player->velocity.x = -MOVE_SPEED;
+    map->players[0]->velocity.x = -MOVE_SPEED;
 }
 
-void move_right(struct character *player)
+void move_right(struct map *map)
 {
-    player->velocity.x = MOVE_SPEED;
+    map->players[0]->velocity.x = MOVE_SPEED;
 }
 
-void move_jump(struct character *player)
+void move_jump(struct map *map)
 {
-    player->velocity.y = -JUMP;
+    map->players[0]->velocity.y = -JUMP;
 }
 
 int move_all(struct map *map)
