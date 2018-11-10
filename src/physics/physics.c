@@ -80,7 +80,7 @@ int is_intersect(struct line l1, struct line l2)
 }
 
 
-/*
+
 static int check_col(struct character *player, struct line line)
 {
     struct vec2 newpos = player->position;
@@ -95,9 +95,9 @@ static int check_col(struct character *player, struct line line)
         };
     return is_intersect(dPlayer, line);
 }
-*/
 
 
+/*
 static int check_col(struct character *player, struct line line)
 {
     struct vec2 next = v_sum(player->position, player->velocity);
@@ -116,6 +116,7 @@ static int check_col(struct character *player, struct line line)
         return is_between(line.p1.y, next.y, next.y + player->size.y);
     return 0;
 }
+*/
 
 static struct vec2 find_intersection(struct character *player, struct line l)
 {
