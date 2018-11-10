@@ -61,6 +61,8 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[EF]);
     SDL_DestroyTexture(game->texture_lib[EFJ]);
 
+    SDL_DestroyTexture(game->texture_lib[DOOR]);
+    SDL_DestroyTexture(game->texture_lib[DOORS]);
     SDL_DestroyTexture(game->texture_lib[BG]);
     SDL_DestroyTexture(game->texture_lib[CREDITS]);
     SDL_DestroyTexture(game->texture_lib[CREDITSS]);

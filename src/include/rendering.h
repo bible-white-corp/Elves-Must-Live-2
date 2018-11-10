@@ -30,8 +30,10 @@
 #define ER0_PATH "ressources/Ennemies/right0.png"
 #define ER1_PATH "ressources/Ennemies/right1.png"
 #define EF_PATH "ressources/Ennemies/front.png"
-#define EFJ_PATH "ressources/Ennemies/frontjump.png"
+#define EFJ_PATH "ressources/Ennemies/frontJ.png"
 
+#define DOOR_PATH "ressources/Menus/quit.png"
+#define DOORS_PATH "ressources/Menus/quitS.png"
 #define BG_PATH "ressources/Menus/background.png"
 #define CREDITS_PATH "ressources/Menus/credits.png"
 #define CREDITSS_PATH "ressources/Menus/creditsS.png"

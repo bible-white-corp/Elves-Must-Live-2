@@ -8,15 +8,20 @@ static void load_menus(struct game *game)
     if (!bg_text)
         warnx("cannot convert background to SDL_Texture");
 
+    SDL_Texture *door_text = IMG_LoadTexture(game->renderer,
+            DOOR_PATH);
+    if (!door_text)
+        warnx("cannot convert door to SDL_Texture");
+
+    SDL_Texture *doorS_text = IMG_LoadTexture(game->renderer,
+            DOORS_PATH);
+    if (!doorS_text)
+        warnx("cannot convert doorS to SDL_Texture");
+
     SDL_Texture *credits_text = IMG_LoadTexture(game->renderer,
             CREDITS_PATH);
     if (!credits_text)
         warnx("cannot convert credits to SDL_Texture");
-
-    SDL_Texture *creditsS_text = IMG_LoadTexture(game->renderer,
-            CREDITSS_PATH);
-    if (!creditsS_text)
-        warnx("cannot convert creditsS to SDL_Texture");
 
     SDL_Texture *creditsS_text = IMG_LoadTexture(game->renderer,
             CREDITSS_PATH);
@@ -48,6 +53,8 @@ static void load_menus(struct game *game)
     if (!quickgameS_text)
         warnx("cannot convert quickgameS to SDL_Texture");
 
+    game->texture_lib[DOOR] = door_text;
+    game->texture_lib[DOORS] = doorS_text;
     game->texture_lib[BG] = bg_text;
     game->texture_lib[CREDITS] = credits_text;
     game->texture_lib[CREDITSS] = creditsS_text;
@@ -71,10 +78,10 @@ void load_blocks(struct game *game)
     if (!grass_text)
         warnx("cannot convert void_surface to SDL_Texture");
 
-    SDL_Texture *eml_text = IMG_LoadTexture(game->renderer,
+    SDL_Texture *lava_text = IMG_LoadTexture(game->renderer,
             EML_PATH);
-    if (!eml_text)
-        warnx("cannot convert eml to SDL_Texture");
+    if (!lava_text)
+        warnx("cannot convert lava to SDL_Texture");
 
 
     game->texture_lib[VOID] = void_text;

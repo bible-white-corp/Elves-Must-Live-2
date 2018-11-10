@@ -43,8 +43,10 @@ enum block
     EML = 33,
     HISTORY = 34,
     HISTORYS = 35,
-    QUICKGAME = 35,
-    QUICKGAMES = 36
+    QUICKGAME = 36,
+    QUICKGAMES = 37,
+    DOOR = 38,
+    DOORS = 39
 };
 
 struct map
