@@ -53,6 +53,12 @@ static void load_menus(struct game *game)
     if (!quickgameS_text)
         warnx("cannot convert quickgameS to SDL_Texture");
 
+    SDL_Texture *back_text = IMG_LoadTexture(game->renderer,
+            BACK_PATH);
+    if (!back_text)
+        warnx("cannot convert back to SDL_Texture");
+
+    game->texture_lib[BACK] = back_text;
     game->texture_lib[DOOR] = door_text;
     game->texture_lib[DOORS] = doorS_text;
     game->texture_lib[BG] = bg_text;

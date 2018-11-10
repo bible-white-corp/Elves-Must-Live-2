@@ -35,6 +35,7 @@ void init_sdl(struct game *game)
 
 void destroy_sdl(struct game *game)
 {
+    SDL_DestroyTexture(game->texture_lib[BACK]);
     SDL_DestroyTexture(game->texture_lib[VOID]);
     SDL_DestroyTexture(game->texture_lib[GRASS]);
     SDL_DestroyTexture(game->texture_lib[LAVA]);
@@ -227,6 +228,10 @@ static SDL_Texture *select_block_texture(struct game *game, enum block block)
 
 static void render_map(struct game *game)
 {
+    SDL_Rect dstrect;
+    dstrect.x = 0;
+    dstrect.y = 0;
+    SDL_RenderCopy(game->renderer, game->texture_lib[BACK], NULL, &dstrect);
     int imax = WIN_WIDTH / BLOCK_SIZE;
     int jmax = WIN_HEIGHT / BLOCK_SIZE;
 

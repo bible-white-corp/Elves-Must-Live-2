@@ -19,6 +19,7 @@ enum block
     LAVA = 2,
     LAVA2 = 3,
     PRINCESS = 4,
+    BACK = 9,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
