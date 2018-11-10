@@ -46,20 +46,28 @@ static void add_player(int i, int j, struct map *map, short is_player)
         map->players[0]->is_player = 1;
 }
 
-void map_parse(char *path, struct map *map)
+void map_parse(char *path, struct map *map, short is_new)
 {
-    if (map->grid)
-        map_delete(map);
+    if (is_new)
+        map->players = malloc(sizeof(struct character*) * 20);
+    else
+    {
+        for (size_t i = 1; i < map->n_players; i++)
+            free(map->players[i]);
+    }
     map->n_players = 1;
-    map->players = malloc(sizeof(struct character*) * 20);
     char cur;
     FILE *f = fopen(path, "r");
     if (!f)
         err(1, "Cannot open %s", path);
-    enum block **grid = malloc(sizeof(enum block*) * HEIGHT);
+    enum block **grid = map->grid;
+    if (is_new)
+        grid = malloc(sizeof(enum block*) * HEIGHT);
+
     for (int j = 0; j < HEIGHT; j++)
     {
-        grid[j] = malloc(sizeof(enum block) * WIDTH);
+        if (is_new)
+            grid[j] = malloc(sizeof(enum block) * WIDTH);
         for (int i = 0; i < WIDTH + 1; i++)
         {
             fread(&cur, 1, 1, f);
@@ -78,7 +86,8 @@ void map_parse(char *path, struct map *map)
                     break;
                 case 'p':
                     grid[j][i] = VOID;
-                    add_player(i, j, map, 1);
+                    if (is_new)
+                        add_player(i, j, map, 1);
                     break;
                 case 'e':
                     grid[j][i] = VOID;

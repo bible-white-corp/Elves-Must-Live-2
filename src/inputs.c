@@ -55,7 +55,7 @@ int update(struct game *game, struct inputs in)
     if (game->map->players[0]->position.x > 51)
     {
         game->lvl++;
-        return 1;
+        return 2;
     }
     if (res == -1)
         return -1;
