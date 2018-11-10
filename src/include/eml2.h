@@ -16,9 +16,10 @@ enum block
 {
     VOID = 0,
     GRASS = 1,
-    LAVA = 2,
+    LAVA1 = 2,
     LAVA2 = 3,
-    PRINCESS = 4,
+    LAVA3 = 4,
+    PRINCESS = 5,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
@@ -86,6 +87,7 @@ struct game
     struct map *map;
     int lvl;
     int timer;
+    int timer_lava;
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture **texture_lib;

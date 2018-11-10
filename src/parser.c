@@ -84,7 +84,7 @@ void map_parse(char *path, struct map *map, short is_new)
                     grid[j][i] = GRASS;
                     break;
                 case 'l':
-                    grid[j][i] = LAVA;
+                    grid[j][i] = LAVA1;
                     break;
                 case 'p':
                     grid[j][i] = VOID;

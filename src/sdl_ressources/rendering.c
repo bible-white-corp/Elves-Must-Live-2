@@ -37,8 +37,9 @@ void destroy_sdl(struct game *game)
 {
     SDL_DestroyTexture(game->texture_lib[VOID]);
     SDL_DestroyTexture(game->texture_lib[GRASS]);
-    SDL_DestroyTexture(game->texture_lib[LAVA]);
+    SDL_DestroyTexture(game->texture_lib[LAVA1]);
     SDL_DestroyTexture(game->texture_lib[LAVA2]);
+    SDL_DestroyTexture(game->texture_lib[LAVA3]);
 
     SDL_DestroyTexture(game->texture_lib[PR0]);
     SDL_DestroyTexture(game->texture_lib[PR1]);
@@ -214,13 +215,24 @@ void render_players(struct game *game)
     }
 }
 
+static int get_lava_timer(struct game *game)
+{
+    int res = game->timer_lava;
+    game->timer_lava += 1;
+    if (!game->timer_lava < TIMER_MAX_LAVA)
+        game->timer_lava = 0;
+    return res;
+}
+
 static SDL_Texture *select_block_texture(struct game *game, enum block block)
 {
-    if (block == LAVA)
+    if (block == LAVA1)
     {
-        if (game->timer > 10)
-            return game->texture_lib[LAVA];
-        return game->texture_lib[LAVA2];
+        if (get_lava_timer(game) < TIMER_MAX_LAVA)
+            return game->texture_lib[LAVA1];
+        else if (get_lava_timer(game) < TIMER_MAX_LAVA * 2)
+            return game->texture_lib[LAVA2];
+        return game->texture_lib[LAVA3];
     }
     return game->texture_lib[block];
 }

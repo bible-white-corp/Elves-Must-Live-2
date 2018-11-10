@@ -28,6 +28,7 @@ void init_game(struct game *game)
     init_map(game, game->lvl);
     game->texture_lib = calloc(30, sizeof(SDL_Texture*));
     game->timer = 0;
+    game->timer_lava = 0;
     // Init SDL2 stuff
     init_sdl(game);
     load_textures(game);

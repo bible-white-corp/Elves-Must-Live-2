@@ -3,8 +3,9 @@
 #include "eml2.h"
 
 #define GAME_NAME "Elves Must Live 2"
-#define LAVA_PATH "ressources/blocks/lava.png"
-#define LAVA2_PATH "ressources/blocks/lava2.png"
+#define LAVA1_PATH "ressources/blocks/lava2.png"
+#define LAVA2_PATH "ressources/blocks/lava3.png"
+#define LAVA3_PATH "ressources/blocks/lava4.png"
 #define GRASS_PATH "ressources/blocks/grass.png"
 #define VOID_PATH "ressources/blocks/void.png"
 #define PRINCESS_PATH "ressources/blocks/princess.png"
@@ -51,6 +52,10 @@
 
 #define TIMER_MAX_ATTACK 30
 #define TIMER_MAX_ATTACK2 15
+
+#define TIMER_MAX_LAVA 60
+#define TIMER_MAX_LAVA3 20
+
 
 //load.c
 void load_blocks(struct game *game);
