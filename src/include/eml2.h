@@ -71,8 +71,9 @@ struct character
     short is_ground;
     short orientation;
     short is_attacking;
+    short has_jumped;
 
-    short is_dead;
+    short is_dead; //inutile
 
     struct vec2 size;
 
