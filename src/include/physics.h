@@ -6,7 +6,7 @@
 #define ACCELERATION 0.02f
 #define BOUNCE 0.5f
 #define EPSILON 0.000001f
-#define MOVE_SPEED 0.1f
+#define MOVE_SPEED 0.5f
 #define JUMP 0.7f
 #define DRAG 0.97f
 int apply_gravity(struct map *map);

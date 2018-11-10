@@ -16,6 +16,10 @@ static float min(float a, float b)
 }
 
 
+static int is_between(float a, float borne1, float borne2)
+{
+    return borne1 < a && a < borne2;
+}
 
 int apply_gravity(struct map *map)
 {
@@ -76,7 +80,7 @@ int is_intersect(struct line l1, struct line l2)
 }
 
 
-
+/*
 static int check_col(struct character *player, struct line line)
 {
     struct vec2 newpos = player->position;
@@ -91,7 +95,24 @@ static int check_col(struct character *player, struct line line)
         };
     return is_intersect(dPlayer, line);
 }
+*/
 
+
+static int check_col(struct character *player, struct line line)
+{
+    if (line.p1.x == line.p2.x) //vertical returns 1
+    {
+        if (is_between(line.p1.y, player->position.y, player->position.y + player->size.y)
+            || is_between(line.p2.y, player->position.y, player->position.y + player->size.y))
+            return is_between(line.p1.x, player->position.x, player->position.x + player->size.x);
+        return 0;
+    }
+    //horizontal returns 2
+    if (is_between(line.p1.x, player->position.x, player->position.x + player->size.x)
+        || is_between(line.p2.x, player->position.x, player->position.x + player->size.x))
+        return 2 * is_between(line.p1.y, player->position.y, player->position.y + player->size.y);
+    return 0;
+}
 
 static struct vec2 find_intersection(struct character *player, struct line l)
 {
@@ -132,7 +153,7 @@ static void move(struct character *player)
 
 static void move_bounce(struct character *player, struct line l)
 {
-    struct vec2 inter = find_intersection(player, l);
+//    struct vec2 inter = find_intersection(player, l);
 /*
     if (player->velocity.x > 0)
         inter.x -= player->size.x;
@@ -176,12 +197,11 @@ int move_all(struct map *map)
         for (size_t j = 0; j < ndel; j++)
         {
             struct line delim = map->delims[j];
-            if (check_col(players[i], delim))
-            {
-                move_bounce(players[i], delim);
-                collided = 1;
-                break;
-            }
+            if (check_col(players[i], delim) == 0)
+                continue;
+            move_bounce(players[i], delim);
+            collided = 1;
+            break;
         }
         if (!collided)
             move(players[i]);
