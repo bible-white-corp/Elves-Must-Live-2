@@ -4,14 +4,19 @@
 
 static void add_player(int i, int j, struct map *map)
 {
-    map->players[map->n_players]->position = { i, j };
+    struct vec2 pos =
+    {
+        i, j
+    };
+    map->players[map->n_players] = malloc(sizeof(struct character));
+    map->players[map->n_players]->position = pos;
     map->n_players++;
 }
 
 void map_parse(char *path, struct map *map)
 {
     map->n_players = 0;
-    map->players = malloc(sizeof(struct characters*) * 20);
+    map->players = malloc(sizeof(struct character*) * 20);
     char cur;
     FILE *f = fopen(path, "r");
     enum block **grid = malloc(sizeof(enum block*) * HEIGHT);
@@ -53,5 +58,6 @@ void map_delete(struct map *map)
     {
         free(map->grid[i]);
     }
+    // FREE PLAYERS
     free(map->grid);
 }

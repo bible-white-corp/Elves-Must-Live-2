@@ -10,7 +10,7 @@
 #include <SDL2/SDL_image.h>
 #include <stddef.h>
 
-//#include "vector.h"
+#include "vector.h"
 
 enum block
 {
@@ -23,7 +23,6 @@ enum block
     PR1 = 14,
     PR2 = 15,
     PF = 16
-
 };
 
 struct map
@@ -31,7 +30,7 @@ struct map
     struct character **players;
     size_t n_players;
 
-    //struct vec2 *delims;
+    struct vec2 *delims;
     size_t n_delims_duos; //n * 2 delims presents
 
     enum block **grid; //grid[height][width] merci Louis
@@ -42,11 +41,11 @@ struct character
     short is_player; //further implementation will change this in enum
     struct map *map;
 
-    //struct vec2 size;
+    struct vec2 size;
 
-    //struct vec2 position;
-    //struct vec2 velocity;
-    //struct vec2 acceleration;
+    struct vec2 position;
+    struct vec2 velocity;
+    struct vec2 acceleration;
 };
 
 struct game

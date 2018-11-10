@@ -89,5 +89,6 @@ void render_frame(struct game *game)
                     &dstrect);
         }
     }
+    render_players(game);
     SDL_RenderPresent(game->renderer);
 }

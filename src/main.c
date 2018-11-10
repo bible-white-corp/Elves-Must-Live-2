@@ -11,7 +11,7 @@ void init_game(struct game *game)
     game->map = malloc(sizeof(struct map));
     map_parse("src/map.eml", game->map);
     //compute_delims(game->map);
-    game->texture_lib = calloc(10, sizeof(SDL_Texture*));
+    game->texture_lib = calloc(20, sizeof(SDL_Texture*));
 
     // Init SDL2 stuff
     init_sdl(game);
