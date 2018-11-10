@@ -50,6 +50,7 @@ struct character
     struct map *map;
 
     short is_ground;
+    short orientation;
 
     short is_dead;
 

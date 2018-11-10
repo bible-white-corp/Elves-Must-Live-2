@@ -155,7 +155,7 @@ void render_players(struct game *game)
 
         struct character *player = game->map->players[i];
         SDL_Texture *text;
-        if (!player->is_player)
+        if (player->is_player)
             text = select_player_sprite(game, player);
         else
             text= NULL;

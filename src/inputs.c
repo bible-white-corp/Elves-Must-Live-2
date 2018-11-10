@@ -37,9 +37,27 @@ int update(struct game *game, struct inputs in)
     }
     apply_gravity(game->map);
     int res = move_all(game->map);
-    if (res == 1)
+    for (size_t i = 0; i < game->map->n_players; i++)
+    {
+        struct character *player = game->map->players[i];
+        int dir = player->velocity.x > 0.01 ? 1 : player->velocity.x < -0.01 ? -1 : 0;
+        if (dir == -1)
+            player->orientation = -1;
+        if (dir == 1)
+            player->orientation = 1;
+        printf("x %f\ny %f\n%d\n\n", player->position.x, player->position.y, player->orientation);
+    }
+    if (game->map->players[0]->position.x < 0)
+    {
         game->lvl--;
-    if (res == 2)
+        return 1;
+    }
+    if (game->map->players[0]->position.x > 51)
+    {
         game->lvl++;
-    return res;
+        return 1;
+    }
+    if (res == -1)
+        return -1;
+    return 0;
 }

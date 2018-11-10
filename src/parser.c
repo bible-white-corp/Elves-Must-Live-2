@@ -1,6 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "eml2.h"
+#include <err.h>
+
+void map_delete(struct map *map)
+{
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        free(map->grid[i]);
+    }
+    // FREE PLAYERS
+    for (size_t i = 0; i < map->n_players; i++)
+        free(map->players[i]);
+    free(map->grid);
+}
 
 static void add_player(int i, int j, struct map *map, short is_player)
 {
@@ -15,7 +28,9 @@ static void add_player(int i, int j, struct map *map, short is_player)
 
     int cur = map->n_players;
     if (is_player)
+    {
         cur = 0;
+    }
     else
         map->n_players++;
 
@@ -24,15 +39,22 @@ static void add_player(int i, int j, struct map *map, short is_player)
     map->players[cur]->size = size;
     map->players[cur]->map = map;
     map->players[cur]->is_ground = 0;
+    map->players[cur]->orientation = 1;
     map->players[cur]->is_dead = 0;
+    if (is_player)
+        map->players[0]->is_player = 1;
 }
 
 void map_parse(char *path, struct map *map)
 {
+    if (map->grid)
+        map_delete(map);
     map->n_players = 1;
     map->players = malloc(sizeof(struct character*) * 20);
     char cur;
     FILE *f = fopen(path, "r");
+    if (!f)
+        err(1, "Cannot open %s", path);
     enum block **grid = malloc(sizeof(enum block*) * HEIGHT);
     for (int j = 0; j < HEIGHT; j++)
     {
@@ -73,14 +95,4 @@ void map_parse(char *path, struct map *map)
     map->grid = grid;
 }
 
-void map_delete(struct map *map)
-{
-    for (int i = 0; i < HEIGHT; i++)
-    {
-        free(map->grid[i]);
-    }
-    // FREE PLAYERS
-    for (size_t i = 0; i < map->n_players; i++)
-        free(map->players[i]);
-    free(map->grid);
-}
+
