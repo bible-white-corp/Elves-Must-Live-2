@@ -2,8 +2,16 @@
 #include <stdlib.h>
 #include "eml2.h"
 
+static void add_player(int i, int j, struct map *map)
+{
+    map->players[map->n_players]->position = { i, j };
+    map->n_players++;
+}
+
 void map_parse(char *path, struct map *map)
 {
+    map->n_players = 0;
+    map->players = malloc(sizeof(struct characters*) * 20);
     char cur;
     FILE *f = fopen(path, "r");
     enum block **grid = malloc(sizeof(enum block*) * HEIGHT);
@@ -22,6 +30,10 @@ void map_parse(char *path, struct map *map)
                     break;
                 case 'w':
                     grid[j][i] = GRASS;
+                    break;
+                case 'p':
+                    grid[j][i] = VOID;
+                    add_player(i, j, map);
                     break;
                 default:
                     grid[j][i] = VOID;
