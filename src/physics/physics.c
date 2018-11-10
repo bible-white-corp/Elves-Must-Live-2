@@ -100,11 +100,12 @@ static int check_col(struct character *player, struct line line)
 
 static int check_col(struct character *player, struct line line)
 {
+    struct vec2 next = v_sum(player->position, player->velocity);
     if (line.p1.x == line.p2.x) //vertical returns 1
     {
-        if (is_between(line.p1.y, player->position.y, player->position.y + player->size.y)
-            || is_between(line.p2.y, player->position.y, player->position.y + player->size.y))
-            return is_between(line.p1.x, player->position.x, player->position.x + player->size.x);
+        if (is_between(line.p1.y, next.y, next.y + player->size.y)
+            || is_between(line.p2.y, next.y, next.y + player->size.y))
+            return is_between(line.p1.x, next.x, next.x + player->size.x);
         return 0;
     }
     //horizontal returns 2
@@ -153,17 +154,10 @@ static void move(struct character *player)
 
 static void move_bounce(struct character *player, struct line l)
 {
-//    struct vec2 inter = find_intersection(player, l);
-/*
-    if (player->velocity.x > 0)
-        inter.x -= player->size.x;
-    if (player->velocity.y > 0)
-        inter.y -= player->size.y;
-
-    player->position = inter;
-*/
     if (l.p1.x == l.p2.x) //collide avec un truc vertical
+    {
         player->velocity.x *= (-1);
+    }
     else
         player->velocity.y *= (-1);
     player->velocity = v_scale(player->velocity, BOUNCE);
@@ -201,7 +195,6 @@ int move_all(struct map *map)
                 continue;
             move_bounce(players[i], delim);
             collided = 1;
-            break;
         }
         if (!collided)
             move(players[i]);
