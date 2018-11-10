@@ -208,16 +208,22 @@ int is_in_lava(struct character *player, int i, int j)
     return 0;
 }
 
+
+
+
 int is_dead(struct map *map)
 {
     struct character *player = map->players[0];
-    for (size_t i = 1; i < map->n_players; i++) //ennemies handling
+
+    if (player->position.y > HEIGHT + 8) //fall death
+        return 1;
+    for (size_t i = 1; i < map->n_players; i++) //ennemies death
     {
         if (is_in(player, map->players[i]))
             return 1;
     }
 
-    for (int i = 0; i < WIDTH; i++)
+    for (int i = 0; i < WIDTH; i++) //lava death
     {
         for (int j = 0; j < HEIGHT; j++)
         {
@@ -232,6 +238,32 @@ int is_dead(struct map *map)
     return 0;
 }
 
+
+
+
+int ground_under(struct map *map, struct vec2 point)
+{
+    int x = point.x;
+    int y = point.y - 0.1f;
+
+    return map->grid[y][x] != VOID;
+}
+
+int on_ground(struct map *map)
+{
+    struct character *player = map->players[0];
+    struct vec2 feet1 =
+        {
+            player->position.x,
+            player->position.y + player->size.y + 1
+        };
+    struct vec2 feet2 =
+    {
+        player->position.x + player->size.x,
+        player->position.y + player->size.y + 1
+    };
+    return ground_under(map, feet1) || ground_under(map, feet2);
+}
 
 int move_all(struct map *map)
 {
@@ -254,12 +286,21 @@ int move_all(struct map *map)
             move(players[i]);
     }
 
+    players[0]->is_ground = on_ground(map);
+    printf("on ground?: %d\n", players[0]->is_ground);
     if (is_dead(map))
         return -1;
-    if (map->players[0]->position.y > HEIGHT + 5)
-        return -1;
+    
     return 0;
 }
+
+
+
+
+
+
+
+
 
 
 struct line l_create(float a, float b, float c, float d)
@@ -311,7 +352,6 @@ void remove_redundancies(struct map *map)
         }
     }
 }
-
 
 void compute_delims(struct map *map)
 {
