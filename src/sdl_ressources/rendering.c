@@ -74,6 +74,9 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[HISTORYS]);
     SDL_DestroyTexture(game->texture_lib[QUICKGAME]);
     SDL_DestroyTexture(game->texture_lib[QUICKGAMES]);
+    SDL_DestroyTexture(game->texture_lib[CONTINUE]);
+    SDL_DestroyTexture(game->texture_lib[CONTINUES]);
+    SDL_DestroyTexture(game->texture_lib[VICTORY]);
 
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);

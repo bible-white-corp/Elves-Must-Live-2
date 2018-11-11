@@ -58,6 +58,21 @@ static void load_menus(struct game *game)
     if (!back_text)
         warnx("cannot convert back to SDL_Texture");
 
+    SDL_Texture *continue_text = IMG_LoadTexture(game->renderer,
+            CONTINUE_PATH);
+    if (!continue_text)
+        warnx("cannot continue to SDL_Texture");
+
+    SDL_Texture *continueS_text = IMG_LoadTexture(game->renderer,
+            CONTINUES_PATH);
+    if (!continueS_text)
+        warnx("cannot continueS to SDL_Texture");
+
+    SDL_Texture *victory_text = IMG_LoadTexture(game->renderer,
+            VICTORY_PATH);
+    if (!victory_text)
+        warnx("cannot victory to SDL_Texture");
+
     game->texture_lib[BACK] = back_text;
     game->texture_lib[DOOR] = door_text;
     game->texture_lib[DOORS] = doorS_text;
@@ -69,6 +84,9 @@ static void load_menus(struct game *game)
     game->texture_lib[HISTORYS] = historyS_text;
     game->texture_lib[QUICKGAME] = quickgame_text;
     game->texture_lib[QUICKGAMES] = quickgameS_text;
+    game->texture_lib[CONTINUE] = continue_text;
+    game->texture_lib[CONTINUES] = continueS_text;
+    game->texture_lib[VICTORY] = victory_text;
 
 }
 

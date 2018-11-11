@@ -50,7 +50,10 @@ enum block
     QUICKGAME = 36,
     QUICKGAMES = 37,
     DOOR = 38,
-    DOORS = 39
+    DOORS = 39,
+    CONTINUE = 40,
+    CONTINUES = 41,
+    VICTORY = 42
 };
 
 struct map
