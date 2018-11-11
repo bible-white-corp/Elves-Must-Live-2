@@ -48,7 +48,7 @@ void launch_game(struct game *game)
         // Get keyboard inputs
         struct inputs in =
         {
-            0, 0, 0, 0, 0
+            0, 0, 0, 0, 0, 0
         };
         if (death == 0)
             in = get_inputs();
@@ -64,6 +64,14 @@ void launch_game(struct game *game)
                 game->map->players[0]->position.x = 48;
             if (res == 2)
                 game->map->players[0]->position.x = 2;
+        }
+        if (in.cheat && game->map->players[0]->is_attacking)
+        {
+            init_map(game, ++game->lvl);
+            game->map->players[0]->orientation = 0;
+            game->map->players[0]->is_ground = 0;
+            game->map->players[0]->has_jumped = 0;
+            game->map->players[0]->is_attacking = 0;
         }
         if (res == -2)
         {

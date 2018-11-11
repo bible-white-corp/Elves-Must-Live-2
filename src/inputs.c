@@ -6,7 +6,7 @@ struct inputs get_inputs(void)
 {
     struct inputs in =
     {
-        0, 0, 0, 0, 0
+        0, 0, 0, 0, 0, 0
     };
     SDL_PumpEvents();
     const Uint8 *state = SDL_GetKeyboardState(NULL);
@@ -20,6 +20,8 @@ struct inputs get_inputs(void)
         in.quit = 1;
     if (state[SDL_SCANCODE_RCTRL])
         in.attack = 1;
+    if (state[SDL_SCANCODE_LCTRL])
+        in.cheat = -1;
     return in;
 }
 

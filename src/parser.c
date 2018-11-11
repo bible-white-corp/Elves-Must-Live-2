@@ -101,7 +101,7 @@ void map_parse(char *path, struct map *map, short is_new)
                     break;
                 case 'p':
                     grid[j][i] = VOID;
-                    if (is_new)
+                    //if (is_new)
                         add_player(i, j, map, 1);
                     break;
                 case 'e':

@@ -9,6 +9,7 @@ struct inputs
     short right;
     short jump;
     short quit;
+    short cheat;
 };
 
 
