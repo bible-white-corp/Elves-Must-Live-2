@@ -83,7 +83,7 @@ static void render_CREDITSS(struct game *game)
             NULL, &dstrect);
 }
 
-static void render_BG(struct game *game)
+void render_BG(struct game *game)
 {
     SDL_Rect dstrect;
     dstrect.x = 0;
