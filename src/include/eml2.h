@@ -53,7 +53,8 @@ enum block
     DOORS = 39,
     CONTINUE = 40,
     CONTINUES = 41,
-    VICTORY = 42
+    VICTORY = 42,
+    GAMEOVER = 43
 };
 
 struct map

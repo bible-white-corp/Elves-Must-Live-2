@@ -73,6 +73,11 @@ static void load_menus(struct game *game)
     if (!victory_text)
         warnx("cannot victory to SDL_Texture");
 
+    SDL_Texture *gameover_text = IMG_LoadTexture(game->renderer,
+            DEFEAT_PATH);
+    if (!gameover_text)
+        warnx("cannot gameover to SDL_Texture");
+
     game->texture_lib[BACK] = back_text;
     game->texture_lib[DOOR] = door_text;
     game->texture_lib[DOORS] = doorS_text;
@@ -87,7 +92,7 @@ static void load_menus(struct game *game)
     game->texture_lib[CONTINUE] = continue_text;
     game->texture_lib[CONTINUES] = continueS_text;
     game->texture_lib[VICTORY] = victory_text;
-
+    game->texture_lib[GAMEOVER] = gameover_text;
 }
 
 void load_blocks(struct game *game)

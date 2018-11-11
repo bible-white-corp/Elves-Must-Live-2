@@ -67,7 +67,10 @@ void launch_game(struct game *game)
         if (res == -1)
         {
             if (death == 1)
+            {
+                render_defeat(game);
                 break;
+            }
             death = 1;
             struct vec2 pos = game->map->players[0]->position;
             struct vec2 velo = {0, 0};
