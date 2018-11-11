@@ -280,11 +280,11 @@ int on_ground(struct map *map)
 
 int won(struct map *map)
 {
-    for (int i = 0; i < HEIGHT; i++)
+    for (int i = 0; i < WIDTH; i++)
     {
-        for (int j = 0; j < WIDTH; j++)
+        for (int j = 0; j < HEIGHT; j++)
         {
-            if (map->grid[i][j] == 3)
+            if (map->grid[j][i] == PRINCESS)
                 return is_in_coord(map->players[0], i, j);
         }
     }
