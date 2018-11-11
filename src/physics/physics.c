@@ -39,11 +39,12 @@ int apply_gravity(struct map *map)
 
 
 //opti: l'écrire en une ligne
-static int on_line(struct line l1, struct vec2 p)
+static int on_line(struct vec2 p, struct vec2 q, struct vec2 r)
 {
-    int b1 = p.x <= max(l1.p1.x, l1.p2.x) && p.x <= min(l1.p1.x, l1.p2.x);
-    int b2 = p.y <= max(l1.p1.y, l1.p2.y);
-    return b1 && b2 && p.y <= min(l1.p1.y, l1.p2.y);
+    return q.x <= max(p.x, r.x)
+        && q.x >= min(p.x, r.x)
+        && q.y <= max(p.y, r.y)
+        && q.y >= min(p.y, r.y);
 }
 
 
@@ -71,10 +72,10 @@ int is_intersect(struct line l1, struct line l2)
     int dir4 = dir_points(l2.p1, l2.p2, l1.p2);
 
     if ((!is_equal(dir1, dir2) && !is_equal(dir3, dir4))
-        || (!dir1 && on_line(l1, l2.p1))
-        || (!dir2 && on_line(l1, l2.p1))
-        || (!dir3 && on_line(l2, l1.p1))
-        || (!dir4 && on_line(l2, l1.p2)))
+        || (!dir1 && on_line(l1.p1, l2.p1, l1.p2))
+        || (!dir2 && on_line(l1.p1, l2.p2, l1.p2))
+        || (!dir3 && on_line(l2.p1, l1.p1, l2.p2))
+        || (!dir4 && on_line(l2.p1, l1.p2, l2.p2)))
         return 1;
     return 0;
 }
@@ -130,7 +131,7 @@ struct vec2 find_intersection(struct character *player, struct line l)
 static void move(struct character *player)
 {
     player->position = v_sum(player->position, player->velocity);
-//    player->velocity.x *= DRAG;
+    player->velocity.x *= DRAG;
 }
 
 
@@ -173,10 +174,7 @@ void move_jump(struct character *player)
     player->went_jump = TIMEOUT * 2;
 }
 
-void move_attack(struct character *player)
-{
-    player = player;
-}
+
 
 int p_is_in(struct vec2 point, struct vec2 origin, struct vec2 size)
 {
@@ -225,6 +223,45 @@ int is_in_coord(struct character *player, int i, int j)
 
 
 
+void p_remove_at_i(struct character **players, int n, int i)
+{
+    while (i < n)
+    {
+        players[i] = players[i + 1];
+        i++;
+    }
+}
+
+
+void move_attack(struct character *player)
+{
+    if (player->is_attacking)
+        return;
+    struct vec2 attack =
+    {
+        player->position.x + player->orientation * 2,
+        player->position.y + 1
+    };
+
+    struct vec2 attack2 =
+    {
+        player->position.x + player->orientation * 3,
+        player->position.y + 1.5f
+    };
+
+    struct map *map = player->map;
+
+    for (size_t i = 1; i < map->n_players; i++)
+    {
+        if (p_is_in(attack, map->players[i]->position, map->players[i]->size)
+            || p_is_in(attack2, map->players[i]->position, map->players[i]->size))
+        {
+            p_remove_at_i(map->players, map->n_players, i);
+            map->n_players--;
+        }
+    }
+    player->is_attacking = 1;
+}
 
 int is_dead(struct map *map)
 {
@@ -292,6 +329,7 @@ int won(struct map *map)
 }
 
 
+
 int move_all(struct map *map)
 {
     struct character **players = map->players;
@@ -313,11 +351,6 @@ int move_all(struct map *map)
             move(players[i]);
     }
 
-
-
-
-
-
     
     players[0]->is_ground = on_ground(map);
     if (players[0]->went_left)
@@ -328,12 +361,8 @@ int move_all(struct map *map)
 
     if (players[0]->went_jump)
         players[0]->went_jump--;
-    printf("jump: %d\n", players[0]->went_jump);
     if (players[0]->is_ground)
-        players[0]->has_jumped = 0 ;
-
-    if (players[0]->is_attacking)
-        players[0]->is_attacking--;
+        players[0]->has_jumped = 0;
 
     if (is_dead(map))
         return -1;
@@ -406,6 +435,7 @@ void remove_redundancies(struct map *map)
     }
 }
 
+
 void compute_delims(struct map *map)
 {
     size_t nblocks = 0;
@@ -413,7 +443,11 @@ void compute_delims(struct map *map)
     {
         for (int j = 0; j < WIDTH; j++)
         {
-            if (map->grid[i][j] == GRASS)
+            if (map->grid[i][j] == GRASS
+                || map->grid[i][j] == BRICK
+                || map->grid[i][j] == DIRT
+                || map->grid[i][j] == WOOD
+                || map->grid[i][j] == STONE)
             {
                 nblocks += 4;
                 map->delims = realloc(map->delims, sizeof(struct line) * nblocks);

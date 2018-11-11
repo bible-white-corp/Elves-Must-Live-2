@@ -21,3 +21,4 @@ void compute_delims(struct map *map);
 void move_left(struct character *player);
 void move_right(struct character *player);
 void move_jump(struct character *player);
+void move_attack(struct character *player);
