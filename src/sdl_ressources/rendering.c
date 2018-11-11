@@ -1,5 +1,6 @@
 #include <err.h>
 #include "rendering.h"
+#include "SDL2/SDL_mixer.h"
 
 void init_sdl(struct game *game)
 {
@@ -28,9 +29,10 @@ void init_sdl(struct game *game)
         SDL_Quit();
         exit(4);
     }
-
     game->renderer = renderer;
     game->window = win;
+
+    Mix_Init(MIX_INIT_MP3);
 }
 
 void destroy_sdl(struct game *game)
@@ -82,6 +84,7 @@ void destroy_sdl(struct game *game)
 
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
+    Mix_FreeMusic(game->music);
     SDL_Quit();
 }
 
