@@ -35,12 +35,16 @@ void init_sdl(struct game *game)
 
 void destroy_sdl(struct game *game)
 {
-    SDL_DestroyTexture(game->texture_lib[BACK]);
     SDL_DestroyTexture(game->texture_lib[VOID]);
     SDL_DestroyTexture(game->texture_lib[GRASS]);
     SDL_DestroyTexture(game->texture_lib[LAVA1]);
     SDL_DestroyTexture(game->texture_lib[LAVA2]);
     SDL_DestroyTexture(game->texture_lib[LAVA3]);
+    SDL_DestroyTexture(game->texture_lib[BRICK]);
+    SDL_DestroyTexture(game->texture_lib[DIRT]);
+    SDL_DestroyTexture(game->texture_lib[STONE]);
+    SDL_DestroyTexture(game->texture_lib[WOOD]);
+
 
     SDL_DestroyTexture(game->texture_lib[PR0]);
     SDL_DestroyTexture(game->texture_lib[PR1]);
@@ -78,7 +82,7 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[CONTINUES]);
     SDL_DestroyTexture(game->texture_lib[VICTORY]);
     SDL_DestroyTexture(game->texture_lib[GAMEOVER]);
-
+    SDL_DestroyTexture(game->texture_lib[BACK]);
 
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);

@@ -127,12 +127,36 @@ void load_blocks(struct game *game)
     if (!princess_text)
         warnx("cannot convert Princess Shepard to SDL_Texture");
 
+    SDL_Texture *brick_text = IMG_LoadTexture(game->renderer,
+            BRICK_PATH);
+    if (!brick_text)
+        warnx("cannot convert brick to SDL_Texture");
+
+    SDL_Texture *dirt_text = IMG_LoadTexture(game->renderer,
+            DIRT_PATH);
+    if (!dirt_text)
+        warnx("cannot convert dirt to SDL_Texture");
+
+    SDL_Texture *stone_text = IMG_LoadTexture(game->renderer,
+            STONE_PATH);
+    if (!stone_text)
+        warnx("cannot convert stone to SDL_Texture");
+
+    SDL_Texture *wood_text = IMG_LoadTexture(game->renderer,
+            WOOD_PATH);
+    if (!wood_text)
+        warnx("cannot convert wood to SDL_Texture");
+
     game->texture_lib[VOID] = void_text;
     game->texture_lib[GRASS] = grass_text;
     game->texture_lib[LAVA1] = lava1_text;
     game->texture_lib[LAVA2] = lava2_text;
     game->texture_lib[LAVA3] = lava3_text;
     game->texture_lib[PRINCESS] = princess_text;
+    game->texture_lib[BRICK] = brick_text;
+    game->texture_lib[DIRT] = dirt_text;
+    game->texture_lib[STONE] = stone_text;
+    game->texture_lib[WOOD] = wood_text;
 
 }
 

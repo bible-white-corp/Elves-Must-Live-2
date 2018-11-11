@@ -74,12 +74,12 @@ void render_defeat(struct game *game)
 
 void render_victory(struct game *game)
 {
-    SDL_PumpEvents();
     int x;
     int y;
     Uint8 mouse_state;
     while (1)
     {
+        SDL_PumpEvents();
         mouse_state = SDL_GetMouseState(&x, &y);
         render_BG(game);
         render_VICTORY(game);
