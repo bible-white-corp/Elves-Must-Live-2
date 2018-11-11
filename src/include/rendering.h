@@ -62,6 +62,8 @@
 #define G_PATH "ressources/Menus/G.png"
 #define GT_PATH "ressources/Menus/GT.png"
 
+#define R_PATH "ressources/Story/resume.png"
+
 #define TIMER_MAX 20
 #define TIMER_MAX2 10
 

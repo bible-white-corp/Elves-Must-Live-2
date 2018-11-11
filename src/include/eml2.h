@@ -65,7 +65,8 @@ enum block
     TOTO = 47,
     TOTOT = 48,
     G = 49,
-    GT = 50
+    GT = 50,
+    R = 51
 };
 
 struct map

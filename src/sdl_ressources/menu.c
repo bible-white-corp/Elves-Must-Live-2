@@ -129,7 +129,10 @@ int main_menu(struct game *game)
         if (x > 300 && x < 500 && y < 326 && y > 276)
             return 1;
         if (x > 300 && x < 500 && y > 356 && y < 406)
-            x=x;
+        {
+            render_story(game);
+            return 0;
+        }
         if (x > 300 && x < 500 && y > 516 && y < 566)
         {
             render_credits(game);
