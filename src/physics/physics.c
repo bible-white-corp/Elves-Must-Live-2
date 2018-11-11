@@ -141,27 +141,41 @@ static void move_bounce(struct character *player, struct line l)
         player->velocity.x *= -BOUNCE;
     }
     else
-        player->velocity.y *= -(BOUNCE / 10);
+        player->velocity.y *= -(BOUNCE / 15);
     player->velocity = v_scale(player->velocity, BOUNCE);
     move(player);
+    player->has_jumped = 0;
 }
 
 
 void move_left(struct character *player)
 {
+    if (player->went_left && player->is_player)
+        return;
     player->velocity.x = -MOVE_SPEED;
+    player->went_left = TIMEOUT;
 }
 
 void move_right(struct character *player)
 {
+    if (player->went_right && player->is_player)
+        return;
     player->velocity.x = MOVE_SPEED;
+    player->went_right = TIMEOUT;
 }
 
 void move_jump(struct character *player)
 {
+    if (player->has_jumped)
+        return;
     player->velocity.y = -JUMP;
+    player->has_jumped = 1;
 }
 
+void move_attack(struct character *player)
+{
+    
+}
 
 int p_is_in(struct vec2 point, struct vec2 origin, struct vec2 size)
 {
@@ -184,7 +198,7 @@ int is_in(struct character *player, struct character *ennemy)
     return 0;
 }
 
-int is_in_lava(struct character *player, int i, int j)
+int is_in_coord(struct character *player, int i, int j)
 {
     struct vec2 origin =
     {
@@ -229,7 +243,7 @@ int is_dead(struct map *map)
         {
             if (map->grid[j][i] == LAVA1)
             {
-                if (is_in_lava(player, i, j))
+                if (is_in_coord(player, i, j))
                     return 1;
             }
         }
@@ -238,14 +252,13 @@ int is_dead(struct map *map)
 }
 
 
-
-
 int ground_under(struct map *map, struct vec2 point)
 {
     int x = point.x;
     int y = point.y - 0.1f;
-
-    return map->grid[y][x] != VOID;
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+        return map->grid[y][x] != VOID;
+    return 0;
 }
 
 int on_ground(struct map *map)
@@ -263,6 +276,20 @@ int on_ground(struct map *map)
     };
     return ground_under(map, feet1) || ground_under(map, feet2);
 }
+
+int won(struct map *map)
+{
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        for (int j = 0; j < WIDTH; j++)
+        {
+            if (map->grid[i][j] == 3)
+                return is_in_coord(map->players[0], i, j);
+        }
+    }
+    return 0;
+}
+
 
 int move_all(struct map *map)
 {
@@ -286,15 +313,27 @@ int move_all(struct map *map)
     }
 
     players[0]->is_ground = on_ground(map);
-    printf("on ground?: %d\n", players[0]->is_ground);
+    if (players[0]->went_left)
+        players[0]->went_left--;
+
+    if (players[0]->went_right)
+        players[0]->went_right--;
+
+    if (players[0]->is_ground)
+        players[0]->has_jumped = 0 ;
+
+    if (players[0]->is_attacking)
+        players[0]->is_attacking--;
+
     if (is_dead(map))
         return -1;
-    
+    if (won(map))
+    {
+        printf("LOLOLOL\n\n\n\n");
+        return 1;
+    }
     return 0;
 }
-
-
-
 
 
 
@@ -319,7 +358,6 @@ struct line l_create(float a, float b, float c, float d)
     };
     return res;
 }
-
 
 
 struct line *remove_at_i(struct line *list, size_t i, size_t n)
@@ -374,4 +412,3 @@ void compute_delims(struct map *map)
     map->n_delims = nblocks;
     remove_redundancies(map);
 }
-
