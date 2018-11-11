@@ -74,6 +74,8 @@ int update(struct game *game, struct inputs in)
     }
     apply_gravity(game->map);
     int res = move_all(game->map);
+    if (res == 1)
+        return -2;
     for (size_t i = 0; i < 1; i++)
     {
         struct character *player = game->map->players[i];

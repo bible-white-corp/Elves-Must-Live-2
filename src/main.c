@@ -34,6 +34,7 @@ void init_game(struct game *game)
 void destroy_game(struct game *game)
 {
     // Free stuff
+    free(game->map->delims);
     map_delete(game->map);
     free(game->map);
 }
@@ -63,6 +64,11 @@ void launch_game(struct game *game)
                 game->map->players[0]->position.x = 48;
             if (res == 2)
                 game->map->players[0]->position.x = 2;
+        }
+        if (res == -2)
+        {
+            render_victory(game);
+            break;
         }
         if (res == -1)
         {
