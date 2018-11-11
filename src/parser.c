@@ -6,12 +6,12 @@
 void map_delete(struct map *map)
 {
     for (int i = 0; i < HEIGHT; i++)
-    {
         free(map->grid[i]);
-    }
     // FREE PLAYERS
     for (size_t i = 0; i < map->n_players; i++)
         free(map->players[i]);
+
+    free(map->delims);
     free(map->grid);
 }
 
