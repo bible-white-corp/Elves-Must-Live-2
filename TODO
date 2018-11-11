@@ -10,6 +10,11 @@ Display
 [V] Render Ennemies
 [V] Animate Lava
 [V] Main menu
+[V] Story
+[V] Credits
+[V] Extra Blocks
+[ ] Timer
+[ ] Water
 
 Physics
 [V] Basic functions
@@ -22,11 +27,15 @@ Physics
 [V] victory
 [V] multi entities
 [V] ergonomie des collisions
-[-] gerer isground
-[-] 
-
+[V] gérer isground
+[V] enlever double jump
+[V] attack
+[ ] gestion Water
 
 Gameplay
 [V] Parser
-[-] Inputs
-[-] Main
+[V] Inputs
+[V] Main
+[V] Maps Contiguë
+[V] Princesse
+[ ] Ajouter Tourelles
