@@ -46,7 +46,7 @@ static void add_player(int i, int j, struct map *map, short is_player)
 
     player->went_left = 0;
     player->went_right = 0;
-
+    player->went_jump = 0;
     player->is_ground = 0;
     player->orientation = 1;
     player->is_attacking = 0;

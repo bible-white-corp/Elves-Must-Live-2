@@ -130,7 +130,7 @@ struct vec2 find_intersection(struct character *player, struct line l)
 static void move(struct character *player)
 {
     player->position = v_sum(player->position, player->velocity);
-    player->velocity.x *= DRAG;
+//    player->velocity.x *= DRAG;
 }
 
 
@@ -166,15 +166,16 @@ void move_right(struct character *player)
 
 void move_jump(struct character *player)
 {
-    if (player->has_jumped)
+    if (player->has_jumped || player->went_jump)
         return;
     player->velocity.y = -JUMP;
     player->has_jumped = 1;
+    player->went_jump = TIMEOUT * 2;
 }
 
 void move_attack(struct character *player)
 {
-    
+    player = player;
 }
 
 int p_is_in(struct vec2 point, struct vec2 origin, struct vec2 size)
@@ -312,6 +313,12 @@ int move_all(struct map *map)
             move(players[i]);
     }
 
+
+
+
+
+
+    
     players[0]->is_ground = on_ground(map);
     if (players[0]->went_left)
         players[0]->went_left--;
@@ -319,6 +326,9 @@ int move_all(struct map *map)
     if (players[0]->went_right)
         players[0]->went_right--;
 
+    if (players[0]->went_jump)
+        players[0]->went_jump--;
+    printf("jump: %d\n", players[0]->went_jump);
     if (players[0]->is_ground)
         players[0]->has_jumped = 0 ;
 

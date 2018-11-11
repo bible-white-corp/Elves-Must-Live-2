@@ -71,6 +71,7 @@ struct character
 
     int went_left;
     int went_right;
+    int went_jump;
 
     short is_ground;
     short orientation;
