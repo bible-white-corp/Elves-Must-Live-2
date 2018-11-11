@@ -46,9 +46,11 @@
 #define HISTORYS_PATH "ressources/Menus/historyS.png"
 #define QUICKGAME_PATH "ressources/Menus/quickgame.png"
 #define QUICKGAMES_PATH "ressources/Menus/quickgameS.png"
-#define CONTINUE_PATH "ressources/Victory/victory.png"
-#define CONTINUES_PATH "ressources/Victory/victoryS.png"
+#define CONTINUE_PATH "ressources/Victory/continue.png"
+#define CONTINUES_PATH "ressources/Victory/continueS.png"
 #define VICTORY_PATH "ressources/Victory/victory.png"
+#define DEFEAT_PATH "ressources/Defeat/gameover.png"
+
 
 
 #define TIMER_MAX 20
