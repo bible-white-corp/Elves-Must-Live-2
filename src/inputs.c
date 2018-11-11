@@ -87,11 +87,13 @@ int update(struct game *game, struct inputs in)
     if (game->map->players[0]->position.x < 0)
     {
         game->lvl--;
+        game->lvl = (game->lvl + 3) % 3;
         return 1;
     }
     if (game->map->players[0]->position.x > 49)
     {
         game->lvl++;
+        game->lvl = (game->lvl + 3) % 3;
         return 2;
     }
     if (res == -1)
