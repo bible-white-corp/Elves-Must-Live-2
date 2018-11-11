@@ -216,22 +216,20 @@ void render_players(struct game *game)
     }
 }
 
-static int get_lava_timer(struct game *game)
+static void get_lava_timer(struct game *game)
 {
-    int res = game->timer_lava;
     game->timer_lava += 1;
     if (!(game->timer_lava < TIMER_MAX_LAVA))
         game->timer_lava = 0;
-    return res;
 }
 
 static SDL_Texture *select_block_texture(struct game *game, enum block block)
 {
     if (block == LAVA1)
     {
-        if (get_lava_timer(game) < TIMER_MAX_LAVA3)
+        if (game->timer_lava < TIMER_MAX_LAVA3)
             return game->texture_lib[LAVA1];
-        else if (get_lava_timer(game) < TIMER_MAX_LAVA3 * 2)
+        else if (game->timer_lava < TIMER_MAX_LAVA3 * 2)
             return game->texture_lib[LAVA2];
         return game->texture_lib[LAVA3];
     }
@@ -243,7 +241,7 @@ static void render_map(struct game *game)
     SDL_RenderCopy(game->renderer, game->texture_lib[BACK], NULL, NULL);
     int imax = WIN_WIDTH / BLOCK_SIZE;
     int jmax = WIN_HEIGHT / BLOCK_SIZE;
-
+    get_lava_timer(game);
     for (int j = 0; j < jmax; j++)
     {
         for (int i = 0; i < imax; i++)

@@ -23,7 +23,6 @@ static void add_player(int i, int j, struct map *map, short is_player)
     };
     struct vec2 velo =
     {
-        
         0, 0
     };
     struct vec2 size =
@@ -47,7 +46,7 @@ static void add_player(int i, int j, struct map *map, short is_player)
     player->went_left = 0;
     player->went_right = 0;
 
-    player->is_ground = 0;
+    player->is_ground = 1;
     player->orientation = 1;
     player->is_attacking = 0;
     player->has_jumped = 0;

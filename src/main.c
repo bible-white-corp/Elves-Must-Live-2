@@ -75,6 +75,7 @@ void launch_game(struct game *game)
             game->map->players[0]->position = pos;
             game->map->players[0]->velocity = velo;
             game->map->players[0]->orientation = 0;
+            game->map->players[0]->is_ground = 0;
             game->map->players[0]->has_jumped = 0;
             move_jump(game->map->players[0]);
         }
