@@ -4,8 +4,11 @@
 
 #define GAME_NAME "Elves Must Live 2"
 #define LAVA_PATH "ressources/blocks/lava.png"
+#define LAVA2_PATH "ressources/blocks/lava2.png"
 #define GRASS_PATH "ressources/blocks/grass.png"
 #define VOID_PATH "ressources/blocks/void.png"
+#define PRINCESS_PATH "ressources/blocks/princess.png"
+#define BACK_PATH "ressources/Menus/back_game.png"
 
 #define PL0_PATH "ressources/Player/left0.png"
 #define PL1_PATH "ressources/Player/left1.png"

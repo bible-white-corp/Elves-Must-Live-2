@@ -35,9 +35,11 @@ void init_sdl(struct game *game)
 
 void destroy_sdl(struct game *game)
 {
+    SDL_DestroyTexture(game->texture_lib[BACK]);
     SDL_DestroyTexture(game->texture_lib[VOID]);
     SDL_DestroyTexture(game->texture_lib[GRASS]);
     SDL_DestroyTexture(game->texture_lib[LAVA]);
+    SDL_DestroyTexture(game->texture_lib[LAVA2]);
 
     SDL_DestroyTexture(game->texture_lib[PR0]);
     SDL_DestroyTexture(game->texture_lib[PR1]);
@@ -156,7 +158,6 @@ static SDL_Texture *select_player_sprite(struct game *game,
 static SDL_Texture *select_NPC_sprite(struct game *game,
         struct character *player)
 {
-    printf("HERE");
     int timer = get_timer(game);
     int index = timer / TIMER_MAX2;
     int dir = player->orientation;
@@ -214,8 +215,23 @@ void render_players(struct game *game)
     }
 }
 
+static SDL_Texture *select_block_texture(struct game *game, enum block block)
+{
+    if (block == LAVA)
+    {
+        if (game->timer > 10)
+            return game->texture_lib[LAVA];
+        return game->texture_lib[LAVA2];
+    }
+    return game->texture_lib[block];
+}
+
 static void render_map(struct game *game)
 {
+    SDL_Rect dstrect;
+    dstrect.x = 0;
+    dstrect.y = 0;
+    SDL_RenderCopy(game->renderer, game->texture_lib[BACK], NULL, &dstrect);
     int imax = WIN_WIDTH / BLOCK_SIZE;
     int jmax = WIN_HEIGHT / BLOCK_SIZE;
 
@@ -230,10 +246,10 @@ static void render_map(struct game *game)
             dstrect.w = BLOCK_SIZE;
             dstrect.h = BLOCK_SIZE;
 
-            SDL_RenderCopy(game->renderer,
-                    game->texture_lib[game->map->grid[j][i]],
-                    NULL,
-                    &dstrect);
+            if (game->map->grid[j][i] == PRINCESS)
+                dstrect.h *= 2;
+            SDL_RenderCopy(game->renderer, select_block_texture(game,
+                        game->map->grid[j][i]), NULL, &dstrect);
         }
     }
 

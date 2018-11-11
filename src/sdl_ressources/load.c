@@ -53,6 +53,12 @@ static void load_menus(struct game *game)
     if (!quickgameS_text)
         warnx("cannot convert quickgameS to SDL_Texture");
 
+    SDL_Texture *back_text = IMG_LoadTexture(game->renderer,
+            BACK_PATH);
+    if (!back_text)
+        warnx("cannot convert back to SDL_Texture");
+
+    game->texture_lib[BACK] = back_text;
     game->texture_lib[DOOR] = door_text;
     game->texture_lib[DOORS] = doorS_text;
     game->texture_lib[BG] = bg_text;
@@ -79,14 +85,25 @@ void load_blocks(struct game *game)
         warnx("cannot convert void_surface to SDL_Texture");
 
     SDL_Texture *lava_text = IMG_LoadTexture(game->renderer,
-            EML_PATH);
+            LAVA_PATH);
     if (!lava_text)
         warnx("cannot convert lava to SDL_Texture");
 
+    SDL_Texture *lava2_text = IMG_LoadTexture(game->renderer,
+            LAVA2_PATH);
+    if (!lava2_text)
+        warnx("cannot convert lava2 to SDL_Texture");
+
+    SDL_Texture *princess_text = IMG_LoadTexture(game->renderer,
+            PRINCESS_PATH);
+    if (!princess_text)
+        warnx("cannot convert Princess Shepard to SDL_Texture");
 
     game->texture_lib[VOID] = void_text;
     game->texture_lib[GRASS] = grass_text;
     game->texture_lib[LAVA] = lava_text;
+    game->texture_lib[LAVA2] = lava2_text;
+    game->texture_lib[PRINCESS] = princess_text;
 
 }
 

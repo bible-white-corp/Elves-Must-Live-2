@@ -9,6 +9,8 @@
 #define MOVE_SPEED 0.2f
 #define JUMP 0.4f
 #define DRAG 0.97f
+#define MAX_SPEED 5
+
 int apply_gravity(struct map *map);
 int move_all(struct map *map);
 
@@ -18,4 +20,3 @@ void compute_delims(struct map *map);
 void move_left(struct character *player);
 void move_right(struct character *player);
 void move_jump(struct character *player);
-
