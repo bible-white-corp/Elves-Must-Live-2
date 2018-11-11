@@ -118,7 +118,7 @@ int main(void)
 {
     struct game game;
     // Init SDL2 stuff
-    game.texture_lib = calloc(50, sizeof(SDL_Texture*));
+    game.texture_lib = calloc(60, sizeof(SDL_Texture*));
     init_sdl(&game);
     load_textures(&game);
     launch_main_menu(&game);

@@ -58,7 +58,13 @@ enum block
     CONTINUES = 41,
     VICTORY = 42,
     GAMEOVER = 43,
-    BACK = 44
+    BACK = 44,
+    LOUIS = 45,
+    LOUIST = 46,
+    TOTO = 47,
+    TOTOT = 48,
+    G = 49,
+    GT = 50
 };
 
 struct map

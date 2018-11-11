@@ -55,6 +55,12 @@
 #define DEFEAT_PATH "ressources/Defeat/gameover.png"
 #define BACK_PATH "ressources/Menus/back_game.png"
 
+#define LOUIS_PATH "ressources/Menus/Louis.png"
+#define LOUIST_PATH "ressources/Menus/LouisT.png"
+#define TOTO_PATH "ressources/Menus/Toto.png"
+#define TOTOT_PATH "ressources/Menus/TotoT.png"
+#define G_PATH "ressources/Menus/G.png"
+#define GT_PATH "ressources/Menus/GT.png"
 
 #define TIMER_MAX 20
 #define TIMER_MAX2 10

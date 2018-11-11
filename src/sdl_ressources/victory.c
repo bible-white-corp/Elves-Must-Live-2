@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "menu.h"
 
 static void render_VICTORY(struct game *game)
@@ -33,6 +34,71 @@ static void render_CONTINUE(struct game *game)
     SDL_RenderCopy(game->renderer, game->texture_lib[CONTINUE], NULL, &dstrect);
 }
 
+static void render_nameL(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 80;
+    dstrect.y = 400;
+    dstrect.w = 640;
+    dstrect.h = 320;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[LOUIS], NULL, &dstrect);
+}
+
+static void render_titleL(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 80;
+    dstrect.y = 0;
+    dstrect.w = 640;
+    dstrect.h = 320;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[LOUIST], NULL, &dstrect);
+}
+static void render_nameT(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 80;
+    dstrect.y = 400;
+    dstrect.w = 640;
+    dstrect.h = 320;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[TOTO], NULL, &dstrect);
+}
+
+static void render_titleT(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 80;
+    dstrect.y = 0;
+    dstrect.w = 640;
+    dstrect.h = 320;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[TOTOT], NULL, &dstrect);
+}
+
+static void render_nameG(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 80;
+    dstrect.y = 400;
+    dstrect.w = 640;
+    dstrect.h = 320;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[G], NULL, &dstrect);
+}
+
+static void render_titleG(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 80;
+    dstrect.y = 0;
+    dstrect.w = 640;
+    dstrect.h = 320;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[GT], NULL, &dstrect);
+}
+
 static void render_CONTINUES(struct game *game)
 {
     SDL_Rect dstrect;
@@ -44,7 +110,7 @@ static void render_CONTINUES(struct game *game)
     SDL_RenderCopy(game->renderer, game->texture_lib[CONTINUES], NULL,
             &dstrect);
 }
-#include <stdio.h>
+
 void render_defeat(struct game *game)
 {
     int x;
@@ -91,7 +157,52 @@ void render_victory(struct game *game)
         }
         else
             render_CONTINUE(game);
-        SDL_Delay(50);
+        SDL_Delay(100);
+        SDL_RenderPresent(game->renderer);
+    }
+}
+
+void render_credits(struct game *game)
+{
+    int x;
+    int y;
+    Uint8 mouse_state;
+    while (1)
+    {
+        SDL_PumpEvents();
+        mouse_state = SDL_GetMouseState(&x, &y);
+        render_BG(game);
+        render_titleL(game);
+        render_nameL(game);
+        if (mouse_state & SDL_BUTTON_LMASK)
+            break;
+        SDL_Delay(100);
+        SDL_RenderPresent(game->renderer);
+    }
+
+    while (1)
+    {
+        SDL_PumpEvents();
+        mouse_state = SDL_GetMouseState(&x, &y);
+        render_BG(game);
+        render_titleT(game);
+        render_nameT(game);
+        if (mouse_state & SDL_BUTTON_LMASK)
+            break;
+        SDL_Delay(100);
+        SDL_RenderPresent(game->renderer);
+    }
+
+    while (1)
+    {
+        SDL_PumpEvents();
+        mouse_state = SDL_GetMouseState(&x, &y);
+        render_BG(game);
+        render_titleG(game);
+        render_nameG(game);
+        if (mouse_state & SDL_BUTTON_LMASK)
+            break;
+        SDL_Delay(100);
         SDL_RenderPresent(game->renderer);
     }
 }

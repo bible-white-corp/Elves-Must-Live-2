@@ -128,10 +128,13 @@ int main_menu(struct game *game)
     {
         if (x > 300 && x < 500 && y < 326 && y > 276)
             return 1;
-        if (x > 300 && x < 500 && y > 356 && y < 40)
+        if (x > 300 && x < 500 && y > 356 && y < 406)
             x=x;
         if (x > 300 && x < 500 && y > 516 && y < 566)
-            x=x;
+        {
+            render_credits(game);
+            return 0;
+        }
         if (x > 720 && x < 770 && y > 560 && y < 610)
             return -1;
     }
@@ -141,7 +144,7 @@ int main_menu(struct game *game)
     else
         render_QUICKGAME(game);
 
-    if (x > 300 && x < 500 && y > 356 && y < 40)
+    if (x > 300 && x < 500 && y > 356 && y < 406)
         render_HISTORYS(game);
     else
         render_HISTORY(game);

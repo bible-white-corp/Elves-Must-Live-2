@@ -95,6 +95,46 @@ static void load_menus(struct game *game)
     game->texture_lib[GAMEOVER] = gameover_text;
 }
 
+static void load_names(struct game *game)
+{
+    SDL_Texture *louis_text = IMG_LoadTexture(game->renderer,
+            LOUIS_PATH);
+    if (!louis_text)
+        warnx("cannot louis to SDL_Texture");
+
+    SDL_Texture *louist_text = IMG_LoadTexture(game->renderer,
+            LOUIST_PATH);
+    if (!louist_text)
+        warnx("cannot louist to SDL_Texture");
+
+    SDL_Texture *toto_text = IMG_LoadTexture(game->renderer,
+            TOTO_PATH);
+    if (!toto_text)
+        warnx("cannot toto to SDL_Texture");
+
+    SDL_Texture *totot_text = IMG_LoadTexture(game->renderer,
+            TOTOT_PATH);
+    if (!totot_text)
+        warnx("cannot totot to SDL_Texture");
+
+    SDL_Texture *g_text = IMG_LoadTexture(game->renderer,
+            G_PATH);
+    if (!g_text)
+        warnx("cannot g to SDL_Texture");
+
+    SDL_Texture *gt_text = IMG_LoadTexture(game->renderer,
+            GT_PATH);
+    if (!gt_text)
+        warnx("cannot gt to SDL_Texture");
+
+    game->texture_lib[LOUIS] = louist_text;
+    game->texture_lib[LOUIST] = louist_text;
+    game->texture_lib[TOTO] = toto_text;
+    game->texture_lib[TOTOT] = totot_text;
+    game->texture_lib[G] = g_text;
+    game->texture_lib[GT] = gt_text;
+}
+
 void load_blocks(struct game *game)
 {
     SDL_Texture *grass_text = IMG_LoadTexture(game->renderer,
@@ -302,4 +342,5 @@ void load_players(struct game *game)
     load_players_attacks(game);
     load_menus(game);
     load_ennemies(game);
+    load_names(game);
 }
