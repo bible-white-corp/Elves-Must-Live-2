@@ -235,32 +235,24 @@ void p_remove_at_i(struct character **players, int n, int i)
 
 void move_attack(struct character *player)
 {
-    if (player->is_attacking)
-        return;
+    printf("lolol\n\n");
     struct vec2 attack =
     {
-        player->position.x + player->orientation * 2,
+        player->position.x + player->orientation,
         player->position.y + 1
-    };
-
-    struct vec2 attack2 =
-    {
-        player->position.x + player->orientation * 3,
-        player->position.y + 1.5f
     };
 
     struct map *map = player->map;
 
     for (size_t i = 1; i < map->n_players; i++)
     {
-        if (p_is_in(attack, map->players[i]->position, map->players[i]->size)
-            || p_is_in(attack2, map->players[i]->position, map->players[i]->size))
+        if (p_is_in(attack, map->players[i]->position, map->players[i]->size))
+//            || p_is_in(attack2, map->players[i]->position, map->players[i]->size))
         {
             p_remove_at_i(map->players, map->n_players, i);
             map->n_players--;
         }
     }
-    player->is_attacking = 1;
 }
 
 int is_dead(struct map *map)
@@ -322,7 +314,7 @@ int won(struct map *map)
         for (int j = 0; j < HEIGHT; j++)
         {
             if (map->grid[j][i] == PRINCESS)
-                return is_in_coord(map->players[0], i, j) || is_in_coord(map->players[0], i, j - 1);;
+                return is_in_coord(map->players[0], i, j) || is_in_coord(map->players[0], i, j - 1);
         }
     }
     return 0;
@@ -351,6 +343,8 @@ int move_all(struct map *map)
             move(players[i]);
     }
 
+    if (players[0]->is_attacking)
+        move_attack(players[0]);
     
     players[0]->is_ground = on_ground(map);
     if (players[0]->went_left)
