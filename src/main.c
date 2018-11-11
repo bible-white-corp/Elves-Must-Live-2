@@ -40,11 +40,17 @@ void destroy_game(struct game *game)
 
 void launch_game(struct game *game)
 {
+    short death = 0;
     init_game(game);
     while (game->is_playing)
     {
         // Get keyboard inputs
-        struct inputs in = get_inputs();
+        struct inputs in =
+        {
+            0, 0, 0, 0, 0
+        };
+        if (death == 0)
+            in = get_inputs();
 
         // Call physics funcs
         int res = update(game, in);
@@ -59,7 +65,19 @@ void launch_game(struct game *game)
                 game->map->players[0]->position.x = 1;
         }
         if (res == -1)
-            break;
+        {
+            if (death == 1)
+                break;
+            death = 1;
+            struct vec2 pos = game->map->players[0]->position;
+            struct vec2 velo = {0, 0};
+            init_map(game, 99);
+            game->map->players[0]->position = pos;
+            game->map->players[0]->velocity = velo;
+            game->map->players[0]->orientation = 0;
+            game->map->players[0]->has_jumped = 0;
+            move_jump(game->map->players[0]);
+        }
 
         // Render new frame
         render_frame(game);
