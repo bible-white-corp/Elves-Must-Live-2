@@ -81,7 +81,6 @@ int update(struct game *game, struct inputs in)
     best_ia(game);
     if (in.quit)
     {
-        printf("ABORT !!\n");
         game->is_playing = 0;
     }
     apply_gravity(game->map);

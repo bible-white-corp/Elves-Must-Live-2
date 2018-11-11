@@ -361,10 +361,8 @@ int move_all(struct map *map)
     if (is_dead(map))
         return -1;
     if (won(map))
-    {
-        printf("LOLOLOL\n\n\n\n");
         return 1;
-    }
+
     return 0;
 }
 
