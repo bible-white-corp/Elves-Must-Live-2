@@ -27,11 +27,23 @@ short check_block(struct character *pnj, int delta)
 {
     int x = pnj->position.x / 1;
     int y = pnj->position.y / 1;
-    if (pnj->map->grid[y+1][x + delta] == GRASS)
+    if (pnj->map->grid[y+1][x + delta] == GRASS
+            || pnj->map->grid[y+1][x + delta] == DIRT
+            || pnj->map->grid[y+1][x + delta] == WOOD
+            || pnj->map->grid[y+1][x + delta] == STONE
+            || pnj->map->grid[y+1][x + delta] == BRICK)
         return 1;
-    if (pnj->map->grid[y +2][x + delta] == GRASS)
+    if (pnj->map->grid[y+2][x + delta] == GRASS
+            || pnj->map->grid[y+2][x + delta] == DIRT
+            || pnj->map->grid[y+2][x + delta] == WOOD
+            || pnj->map->grid[y+2][x + delta] == STONE
+            || pnj->map->grid[y+2][x + delta] == BRICK)
         return 1;
-    if (pnj->map->grid[y+3][x + delta] != GRASS)
+    if (pnj->map->grid[y+3][x + delta] != GRASS
+            && pnj->map->grid[y+3][x + delta] != DIRT
+            && pnj->map->grid[y+3][x + delta] != WOOD
+            && pnj->map->grid[y+3][x + delta] != STONE
+            && pnj->map->grid[y+3][x + delta] != BRICK)
         return 1;
     return 0;
 }

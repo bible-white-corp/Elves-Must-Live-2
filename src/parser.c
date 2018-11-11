@@ -111,19 +111,15 @@ void map_parse(char *path, struct map *map, short is_new)
                     break;
                 case 'b':
                     grid[j][i] = BRICK;
-                    add_player(i, j, map, 0);
                     break;
                 case 'd':
                     grid[j][i] = DIRT;
-                    add_player(i, j, map, 0);
                     break;
                 case 'g':
                     grid[j][i] = GRASS;
-                    add_player(i, j, map, 0);
                     break;
                 case 's':
                     grid[j][i] = STONE;
-                    add_player(i, j, map, 0);
                     break;
 
                 default:
