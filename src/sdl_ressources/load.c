@@ -84,15 +84,20 @@ void load_blocks(struct game *game)
     if (!grass_text)
         warnx("cannot convert void_surface to SDL_Texture");
 
-    SDL_Texture *lava_text = IMG_LoadTexture(game->renderer,
-            LAVA_PATH);
-    if (!lava_text)
-        warnx("cannot convert lava to SDL_Texture");
+    SDL_Texture *lava1_text = IMG_LoadTexture(game->renderer,
+            LAVA1_PATH);
+    if (!lava1_text)
+        warnx("cannot convert lava1 to SDL_Texture");
 
     SDL_Texture *lava2_text = IMG_LoadTexture(game->renderer,
             LAVA2_PATH);
     if (!lava2_text)
         warnx("cannot convert lava2 to SDL_Texture");
+
+    SDL_Texture *lava3_text = IMG_LoadTexture(game->renderer,
+            LAVA3_PATH);
+    if (!lava3_text)
+        warnx("cannot convert lava3 to SDL_Texture");
 
     SDL_Texture *princess_text = IMG_LoadTexture(game->renderer,
             PRINCESS_PATH);
@@ -101,8 +106,9 @@ void load_blocks(struct game *game)
 
     game->texture_lib[VOID] = void_text;
     game->texture_lib[GRASS] = grass_text;
-    game->texture_lib[LAVA] = lava_text;
+    game->texture_lib[LAVA1] = lava1_text;
     game->texture_lib[LAVA2] = lava2_text;
+    game->texture_lib[LAVA3] = lava3_text;
     game->texture_lib[PRINCESS] = princess_text;
 
 }

@@ -28,7 +28,7 @@ void init_game(struct game *game)
     game->map = malloc(sizeof(struct map));
     init_map(game, game->lvl);
     game->timer = 0;
-
+    game->timer_lava = 0;
 }
 
 void destroy_game(struct game *game)
