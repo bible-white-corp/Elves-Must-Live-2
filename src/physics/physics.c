@@ -382,9 +382,10 @@ struct line *remove_at_i(struct line *list, size_t i, size_t n)
 
 void remove_redundancies(struct map *map)
 {
-    for (size_t i = 0; i < map->n_delims; i++)
+    int nd = map->n_delims;
+    for (int i = 0; i < nd; i++)
     {
-        for (size_t j = i + 1; j < map->n_delims; j++)
+        for (int j = i + 1; j < nd; j++)
         {
             if (l_equal(map->delims[i], map->delims[j])
                 && l_equal(map->delims[i], map->delims[j]))
@@ -393,8 +394,13 @@ void remove_redundancies(struct map *map)
                 map->n_delims--;
                 map->delims = remove_at_i(map->delims, i, map->n_delims);
                 map->n_delims--;
-                remove_redundancies(map);
-                return;
+                j -= 2;
+                i--;
+                nd -= 2;
+                if (j < 0)
+                    j = 0;
+                if (i < 0)
+                    i = 0;
             }
         }
     }
