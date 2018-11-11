@@ -281,7 +281,7 @@ int is_dead(struct map *map)
         {
             if (map->grid[j][i] == LAVA1)
             {
-                if (is_in_coord(player, i, j))
+                if (is_in_coord(player, i, j) || is_in_coord(player, i, j - 1))
                     return 1;
             }
         }
@@ -322,7 +322,7 @@ int won(struct map *map)
         for (int j = 0; j < HEIGHT; j++)
         {
             if (map->grid[j][i] == PRINCESS)
-                return is_in_coord(map->players[0], i, j);
+                return is_in_coord(map->players[0], i, j) || is_in_coord(map->players[0], i, j - 1);;
         }
     }
     return 0;
