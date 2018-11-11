@@ -1,4 +1,5 @@
 #include "menu.h"
+#include <SDL2/SDL_mixer.h>
 
 static void render_VICTORY(struct game *game)
 {
@@ -47,6 +48,10 @@ static void render_CONTINUES(struct game *game)
 #include <stdio.h>
 void render_defeat(struct game *game)
 {
+    Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+    game->music = Mix_LoadMUS("ressources/mp3/death2.mp3");
+    Mix_PlayMusic(game->music, 1);
+
     int x;
     int y;
     Uint8 mouse_state;
@@ -74,6 +79,10 @@ void render_defeat(struct game *game)
 
 void render_victory(struct game *game)
 {
+    Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+    game->music = Mix_LoadMUS("ressources/mp3/victory.mp3");
+    Mix_PlayMusic(game->music, 1);
+    SDL_PumpEvents();
     int x;
     int y;
     Uint8 mouse_state;

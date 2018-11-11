@@ -77,6 +77,9 @@ void launch_game(struct game *game)
                 render_defeat(game);
                 break;
             }
+            Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+            game->music = Mix_LoadMUS("ressources/mp3/death.mp3");
+            Mix_PlayMusic(game->music, 1);
             death = 1;
             struct vec2 pos = game->map->players[0]->position;
             struct vec2 velo = {0, 0};
@@ -98,12 +101,18 @@ void launch_game(struct game *game)
 
 void launch_main_menu(struct game *game)
 {
+    Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+    game->music = Mix_LoadMUS("ressources/mp3/intro.mp3");
+    Mix_PlayMusic(game->music, -1);
     while (1)
     {
         int res = main_menu(game);
         if (res == 1)
         {
             launch_game(game);
+            Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+            game->music = Mix_LoadMUS("ressources/mp3/intro.mp3");
+            Mix_PlayMusic(game->music, -1);
         }
         else if (res == -1)
         {
