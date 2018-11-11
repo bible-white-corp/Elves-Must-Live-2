@@ -61,22 +61,28 @@ static void load_menus(struct game *game)
     SDL_Texture *continue_text = IMG_LoadTexture(game->renderer,
             CONTINUE_PATH);
     if (!continue_text)
-        warnx("cannot continue to SDL_Texture");
+        warnx("cannot convertcontinue to SDL_Texture");
 
     SDL_Texture *continueS_text = IMG_LoadTexture(game->renderer,
             CONTINUES_PATH);
     if (!continueS_text)
-        warnx("cannot continueS to SDL_Texture");
+        warnx("cannot convert continueS to SDL_Texture");
 
     SDL_Texture *victory_text = IMG_LoadTexture(game->renderer,
             VICTORY_PATH);
     if (!victory_text)
-        warnx("cannot victory to SDL_Texture");
+        warnx("cannot convertvictory to SDL_Texture");
 
     SDL_Texture *gameover_text = IMG_LoadTexture(game->renderer,
             DEFEAT_PATH);
     if (!gameover_text)
-        warnx("cannot gameover to SDL_Texture");
+        warnx("cannot convert gameover to SDL_Texture");
+
+    SDL_Texture *resume_text = IMG_LoadTexture(game->renderer,
+            R_PATH);
+    if (!resume_text)
+        warnx("cannot convert resume to SDL_Texture");
+
 
     game->texture_lib[BACK] = back_text;
     game->texture_lib[DOOR] = door_text;
@@ -93,6 +99,7 @@ static void load_menus(struct game *game)
     game->texture_lib[CONTINUES] = continueS_text;
     game->texture_lib[VICTORY] = victory_text;
     game->texture_lib[GAMEOVER] = gameover_text;
+    game->texture_lib[R] = resume_text;
 }
 
 static void load_names(struct game *game)

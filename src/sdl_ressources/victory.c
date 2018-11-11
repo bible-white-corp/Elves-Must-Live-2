@@ -112,6 +112,62 @@ static void render_CONTINUES(struct game *game)
             &dstrect);
 }
 
+static void render_CONTINUESTORY(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 300;
+    dstrect.y = 580;
+    dstrect.w = 200;
+    dstrect.h = 50;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[CONTINUE], NULL,
+            &dstrect);
+}
+
+static void render_CONTINUESSTORY(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 300;
+    dstrect.y = 580;
+    dstrect.w = 200;
+    dstrect.h = 50;
+
+    SDL_RenderCopy(game->renderer, game->texture_lib[CONTINUES], NULL,
+            &dstrect);
+}
+void render_story(struct game *game)
+{
+    SDL_Rect dstrect;
+    dstrect.x = 0;
+    dstrect.y = 0;
+    dstrect.w = 800;
+    dstrect.h = 640;
+
+    int x;
+    int y;
+    SDL_RenderCopy(game->renderer, game->texture_lib[R], NULL,
+            &dstrect);
+    while (1)
+    {
+        SDL_PumpEvents();
+        Uint8 mouse_state = SDL_GetMouseState(&x, &y);
+        SDL_RenderCopy(game->renderer, game->texture_lib[R], NULL,
+            &dstrect);
+
+        if (x > 300 && x < 500 && y > 580 && y < 630)
+        {
+            render_CONTINUESSTORY(game);
+            if (mouse_state & SDL_BUTTON_LMASK)
+                return;
+        }
+        else
+            render_CONTINUESTORY(game);
+        SDL_Delay(50);
+        SDL_RenderPresent(game->renderer);
+    }
+
+}
+
 void render_defeat(struct game *game)
 {
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
