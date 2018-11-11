@@ -235,7 +235,6 @@ void p_remove_at_i(struct character **players, int n, int i)
 
 void move_attack(struct character *player)
 {
-    printf("lolol\n\n");
     struct vec2 attack =
     {
         player->position.x + player->orientation,
@@ -355,7 +354,8 @@ int move_all(struct map *map)
 
     if (players[0]->went_jump)
         players[0]->went_jump--;
-    if (players[0]->is_ground)
+
+    if (players[0]->is_ground && players[0]->went_jump < TIME_JUMP / 2)
         players[0]->has_jumped = 0;
 
     if (is_dead(map))
