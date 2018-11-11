@@ -127,7 +127,7 @@ static void load_names(struct game *game)
     if (!gt_text)
         warnx("cannot gt to SDL_Texture");
 
-    game->texture_lib[LOUIS] = louist_text;
+    game->texture_lib[LOUIS] = louis_text;
     game->texture_lib[LOUIST] = louist_text;
     game->texture_lib[TOTO] = toto_text;
     game->texture_lib[TOTOT] = totot_text;

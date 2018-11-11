@@ -173,45 +173,26 @@ void render_victory(struct game *game)
 
 void render_credits(struct game *game)
 {
-    int x;
-    int y;
-    Uint8 mouse_state;
-    while (1)
-    {
-        SDL_PumpEvents();
-        mouse_state = SDL_GetMouseState(&x, &y);
-        render_BG(game);
-        render_titleL(game);
-        render_nameL(game);
-        if (mouse_state & SDL_BUTTON_LMASK)
-            break;
-        SDL_Delay(100);
-        SDL_RenderPresent(game->renderer);
-    }
+    render_BG(game);
+    render_titleL(game);
+    render_nameL(game);
 
-    while (1)
-    {
-        SDL_PumpEvents();
-        mouse_state = SDL_GetMouseState(&x, &y);
-        render_BG(game);
-        render_titleT(game);
-        render_nameT(game);
-        if (mouse_state & SDL_BUTTON_LMASK)
-            break;
-        SDL_Delay(100);
-        SDL_RenderPresent(game->renderer);
-    }
+    SDL_RenderPresent(game->renderer);
+    SDL_Delay(2000);
 
-    while (1)
-    {
-        SDL_PumpEvents();
-        mouse_state = SDL_GetMouseState(&x, &y);
-        render_BG(game);
-        render_titleG(game);
-        render_nameG(game);
-        if (mouse_state & SDL_BUTTON_LMASK)
-            break;
-        SDL_Delay(100);
-        SDL_RenderPresent(game->renderer);
-    }
+    SDL_PumpEvents();
+    render_BG(game);
+    render_titleT(game);
+    render_nameT(game);
+
+    SDL_RenderPresent(game->renderer);
+    SDL_Delay(2000);
+
+    SDL_PumpEvents();
+    render_BG(game);
+    render_titleG(game);
+    render_nameG(game);
+
+    SDL_RenderPresent(game->renderer);
+    SDL_Delay(2000);
 }
