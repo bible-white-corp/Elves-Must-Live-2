@@ -86,6 +86,13 @@ void destroy_sdl(struct game *game)
     SDL_DestroyTexture(game->texture_lib[GAMEOVER]);
     SDL_DestroyTexture(game->texture_lib[BACK]);
 
+    SDL_DestroyTexture(game->texture_lib[LOUIS]);
+    SDL_DestroyTexture(game->texture_lib[LOUIST]);
+    SDL_DestroyTexture(game->texture_lib[TOTO]);
+    SDL_DestroyTexture(game->texture_lib[TOTOT]);
+    SDL_DestroyTexture(game->texture_lib[G]);
+    SDL_DestroyTexture(game->texture_lib[GT]);
+
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
     Mix_FreeMusic(game->music);
