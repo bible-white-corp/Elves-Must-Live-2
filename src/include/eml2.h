@@ -20,7 +20,10 @@ enum block
     LAVA2 = 3,
     LAVA3 = 4,
     PRINCESS = 5,
-    BACK = 9,
+    BRICK = 6,
+    DIRT = 7,
+    STONE = 8,
+    WOOD = 9,
     PL0 = 10,
     PL1 = 11,
     PL2 = 12,
@@ -54,7 +57,8 @@ enum block
     CONTINUE = 40,
     CONTINUES = 41,
     VICTORY = 42,
-    GAMEOVER = 43
+    GAMEOVER = 43,
+    BACK = 44
 };
 
 struct map

@@ -9,7 +9,10 @@
 #define GRASS_PATH "ressources/blocks/grass.png"
 #define VOID_PATH "ressources/blocks/void.png"
 #define PRINCESS_PATH "ressources/blocks/princess.png"
-#define BACK_PATH "ressources/Menus/back_game.png"
+#define BRICK_PATH "ressources/blocks/brick.png"
+#define DIRT_PATH "ressources/blocks/dirt.png"
+#define STONE_PATH "ressources/blocks/stone.png"
+#define WOOD_PATH "ressources/blocks/woodplanck.png"
 
 #define PL0_PATH "ressources/Player/left0.png"
 #define PL1_PATH "ressources/Player/left1.png"
@@ -50,7 +53,7 @@
 #define CONTINUES_PATH "ressources/Victory/continueS.png"
 #define VICTORY_PATH "ressources/Victory/victory.png"
 #define DEFEAT_PATH "ressources/Defeat/gameover.png"
-
+#define BACK_PATH "ressources/Menus/back_game.png"
 
 
 #define TIMER_MAX 20
