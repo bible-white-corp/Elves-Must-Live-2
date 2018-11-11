@@ -1,0 +1,56 @@
+___________.__                          _____                  __    .____    .__              
+\_   _____/|  |___  __ ____   ______   /     \  __ __  _______/  |_  |    |   |__|__  __ ____  
+ |    __)_ |  |\  \/ // __ \ /  ___/  /  \ /  \|  |  \/  ___/\   __\ |    |   |  \  \/ // __ \ 
+ |        \|  |_\   /\  ___/ \___ \  /    Y    \  |  /\___ \  |  |   |    |___|  |\   /\  ___/ 
+/_______  /|____/\_/  \___  >____  > \____|__  /____//____  > |__|   |_______ \__| \_/  \___  >
+        \/                \/     \/          \/           \/                 \/             \/
+                                               ___  
+                                              (__ \ 
+                                               / _/ 
+                                              (____)
+A game by Thomas Lupin / Géraud Magne / Louis Holleville
+Epita Promo 2021
+
+To build our game:
+-open a terminal on the directory root
+-type "make"
+-launch it whenever you want with "./eml2"
+-enjoy!
+
+
+Elves Must Live 2 is a parkour-platformer game, where your goal, as a traveller entering the ennemy lines, is to get to the Princess Elf without getting killed by the lava, by the Orcs lurking around, or by simply falling to your death.
+
+In order to walk out there alive, you are equiped with a weapon that you can use with CTRL.
+You can move around using the ARROW KEYS.
+You can jump by using the SPACEBAR.
+The most important thing is that you can jump multiple times. How is this done? Simply by hitting
+a wall or the floor. That's right! If, during your jump, you collided with a wall, you will be
+able to jump another time. Use it carefuly!
+
+Find the best way and save the princess by any means!
+
+To learn about the wonderful history of EML2, simply click the "History" button on the mainscreen
+
+
+
+
+Features:
+
+Game Over sound
+Title Screen
+Multiple ways of beating a level
+Gravity
+Jumps
+Bouncing against walls
+Different Levels you can switch from
+Levels only beatable by going back to other ones
+
+
+
+
+
+Sources:
+https://www.libsdl.org/
+http://www.universal-soundbank.com/
+https://www.shutterstock.com
+http://www.epita.fr/
