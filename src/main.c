@@ -58,11 +58,11 @@ void launch_game(struct game *game)
         {
             float save_y = game->map->players[0]->position.y;
             init_map(game, game->lvl);
-            game->map->players[0]->position.y = save_y;
+            game->map->players[0]->position.y = save_y - 1;
             if (res == 1)
-                game->map->players[0]->position.x = 49;
+                game->map->players[0]->position.x = 48;
             if (res == 2)
-                game->map->players[0]->position.x = 1;
+                game->map->players[0]->position.x = 2;
         }
         if (res == -1)
         {
