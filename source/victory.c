@@ -171,7 +171,7 @@ void render_story(struct game *game)
 void render_defeat(struct game *game)
 {
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-    game->music = Mix_LoadMUS("ressources/mp3/death2.mp3");
+    game->music = Mix_LoadMUS("romfs:/ressources/mp3/death2.mp3");
     Mix_PlayMusic(game->music, 1);
 
     int x;
@@ -202,7 +202,7 @@ void render_defeat(struct game *game)
 void render_victory(struct game *game)
 {
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-    game->music = Mix_LoadMUS("ressources/mp3/victory.mp3");
+    game->music = Mix_LoadMUS("romfs:/ressources/mp3/victory.mp3");
     Mix_PlayMusic(game->music, 1);
     SDL_PumpEvents();
     int x;

@@ -1,11 +1,20 @@
-#include <err.h>
 #include "rendering.h"
 #include "SDL2/SDL_mixer.h"
+
+static void warnx(char *str)
+{
+    printf("WARNING : %s\n", str);
+}
+
+static void errx(char *str)
+{
+    printf("ERROR : %s\n", str);
+}
 
 void init_sdl(struct game *game)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
-        errx(2,"could not init SDL: %s", SDL_GetError());//get explicit err msg
+        errx("could not init SDL");//get explicit err msg
 
     //init window
     SDL_Window *win = SDL_CreateWindow(GAME_NAME,
@@ -14,7 +23,7 @@ void init_sdl(struct game *game)
 
     if (!win)
     {
-        warnx("could not init SDL window: %s", SDL_GetError());
+        warnx("could not init SDL window");
         SDL_Quit();
         exit(3);
     }
@@ -24,7 +33,7 @@ void init_sdl(struct game *game)
             SDL_RENDERER_PRESENTVSYNC);
     if (!renderer)
     {
-        warnx("could not init SDL renderer: %s", SDL_GetError());
+        warnx("could not init SDL renderer");
         SDL_DestroyWindow(win);
         SDL_Quit();
         exit(4);

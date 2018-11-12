@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "eml2.h"
-#include <err.h>
 
 void map_delete(struct map *map)
 {
@@ -70,8 +69,6 @@ void map_parse(char *path, struct map *map, short is_new)
     map->n_players = 1;
     char cur;
     FILE *f = fopen(path, "r");
-    if (!f)
-        err(1, "Cannot open %s", path);
     enum block **grid = map->grid;
     if (is_new)
         grid = malloc(sizeof(enum block*) * HEIGHT);

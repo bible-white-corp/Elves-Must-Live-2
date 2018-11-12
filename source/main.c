@@ -86,7 +86,7 @@ void launch_game(struct game *game)
                 break;
             }
             Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-            game->music = Mix_LoadMUS("ressources/mp3/death.mp3");
+            game->music = Mix_LoadMUS("romfs:/ressources/mp3/death.mp3");
             Mix_PlayMusic(game->music, 1);
             death = 1;
             struct vec2 pos = game->map->players[0]->position;
@@ -110,7 +110,7 @@ void launch_game(struct game *game)
 void launch_main_menu(struct game *game)
 {
     Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-    game->music = Mix_LoadMUS("ressources/mp3/intro.mp3");
+    game->music = Mix_LoadMUS("romfs:/ressources/mp3/intro.mp3");
     Mix_PlayMusic(game->music, -1);
     while (1)
     {
@@ -119,7 +119,7 @@ void launch_main_menu(struct game *game)
         {
             launch_game(game);
             Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-            game->music = Mix_LoadMUS("ressources/mp3/intro.mp3");
+            game->music = Mix_LoadMUS("romfs:/ressources/mp3/intro.mp3");
             Mix_PlayMusic(game->music, -1);
         }
         else if (res == -1)
@@ -131,7 +131,7 @@ void launch_main_menu(struct game *game)
 
 
 
-int main(void)
+void main_old(void)
 {
     struct game game;
     // Init SDL2 stuff
@@ -141,4 +141,73 @@ int main(void)
     launch_main_menu(&game);
     destroy_sdl(&game);
     free(game.texture_lib);
+}
+
+#include <switch.h>
+#include <stdint.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_ttf.h>
+
+int main(int argc, char* argv[]) {
+    void *nullptr = (char*) 0;
+    //Do not use anything from <switch.h>
+    //gfxInitDefault();
+    //consoleInit(nullptr);
+/*
+    SDL_Init(SDL_INIT_EVERYTHING);
+
+    //Switch screen size: 720p. Must set to full screen.
+    SDL_Window* window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    if (!window)
+        SDL_Quit();
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    if (!renderer)
+        SDL_Quit();
+    SDL_Surface* screen = SDL_GetWindowSurface(window);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, screen);
+
+    uint32_t* pixels = (uint32_t*) screen->pixels;
+
+    SDL_SetRenderDrawColor(renderer, 33, 33, 128, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+*/
+    while (appletMainLoop()) {
+        /*
+        bool flag = false;
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_KEYDOWN:
+                    printf("Here");
+                    flag = true;
+                    break;
+            }
+        }
+        if (flag)
+            break;
+
+        pixels[23 * screen->pitch + 40] = 0x12345678;
+
+        SDL_UpdateTexture(texture, nullptr, screen->pixels, screen->pitch);
+
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+        SDL_RenderPresent(renderer);
+        */
+        main_old();
+    }
+/*
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(screen);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+*/
+    //No libnx function calls.
+    //gfxExit();
+
+  //  SDL_Quit();
+    return 0;
 }
