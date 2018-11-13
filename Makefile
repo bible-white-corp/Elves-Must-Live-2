@@ -39,7 +39,7 @@ ROMFS		:= romfs
 APP_TITLE	:= Elves Must Live
 APP_AUTHOR	:= Thetoto
 APP_VERSION	:= 1.0
-#ICON		:= romfs/resources/icon.jpg
+ICON		:= romfs/ressources/icon.jpg
 
 #---------------------------------------------------------------------------------
 # options for code generation

@@ -69,6 +69,8 @@ void map_parse(char *path, struct map *map, short is_new)
     map->n_players = 1;
     char cur;
     FILE *f = fopen(path, "r");
+    if (!f)
+        exit(1);
     enum block **grid = map->grid;
     if (is_new)
         grid = malloc(sizeof(enum block*) * HEIGHT);
