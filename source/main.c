@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
     IMG_Init(IMG_INIT_PNG);
     romfsInit();
     //Switch screen size: 720p. Must set to full screen.
-    SDL_Window* window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    SDL_Window* window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (!window)
         SDL_Quit();
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -165,6 +165,8 @@ int main(int argc, char* argv[]) {
     struct game game;
     game.renderer = renderer;
     game.window = window;
+
+    SDL_RenderSetScale(renderer, 1.6f, 1.11f);
 
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
